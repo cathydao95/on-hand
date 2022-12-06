@@ -1,0 +1,23 @@
+.navContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d9d9d9e5;
+  height: 80px;
+}
+
+.iconContainer {
+  flex-basis: 90%;
+  display: flex;
+  justify-content: space-evenly;
+}
+// .test {
+//   color: #00b4bf !important;
+// }
+
+.link {
+}
+
+.linkActive {
+  border-bottom: 4px solid #00b4bf;
+}

@@ -1,0 +1,59 @@
+.pageWrapper {
+  padding: 40px 30px;
+}
+
+.textContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0px;
+  align-items: center;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.allBtn {
+  background-color: white;
+  border: none;
+  color: #00b4bf;
+  font-weight: 700;
+}
+
+.favoritesContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+// No Favorites Container
+.heartIcon {
+  font-size: 10rem;
+  color: #00b4bf;
+}
+.noFavs {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 50px;
+  text-align: center;
+  gap: 10px;
+}
+.noFavsTitle {
+  font-size: 2rem;
+}
+
+.exploreBtn {
+  color: white;
+  background-color: #00b4bf;
+  font-weight: 500;
+  padding: 10px 20px;
+  letter-spacing: 0.1rem;
+}

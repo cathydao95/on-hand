@@ -1,0 +1,84 @@
+.recipeContainer {
+  padding: 20px;
+}
+
+// back button
+.exitContainer {
+  font-size: 2.5rem;
+  text-decoration: none;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.exitIcon {
+  color: #f2efef;
+  background-color: #61b3b8;
+}
+
+.heartContainer {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  padding: 0;
+  background-color: #61b3b8;
+}
+.heartIcon {
+  color: white;
+  font-size: 1.7rem;
+  padding: 5px;
+}
+
+.fillHeartIcon {
+  color: red;
+  font-size: 1.7rem;
+  padding: 5px;
+}
+// recipe image
+.recipeImage {
+  width: 100vw;
+  height: 300px;
+  object-fit: cover;
+}
+
+.textContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ingList {
+  padding: 20px 0px;
+}
+
+.recipeBtn {
+  background-color: #61b3b8;
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 15px 0px;
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  padding-bottom: 10px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+p {
+  margin: 0;
+  padding-bottom: 10px;
+}

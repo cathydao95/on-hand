@@ -1,4 +1,7 @@
 import express from "express";
+import "express-async-errors";
+import morgan from "morgan";
+
 const app = express();
 import dotenv from "dotenv";
 dotenv.config();
@@ -13,10 +16,14 @@ import recipesRouter from "./routes/recipesRoutes.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 import notFoundMiddleware from "./middleware/not-found.js";
 
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
+}
+
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("welcome!");
+app.get("/api/v1", (req, res) => {
+  res.json({ msg: "Welcome!" });
 });
 
 app.use("/api/v1/auth", authRouter);
@@ -27,19 +34,15 @@ app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 4000;
 
-app.listen(port, () => {
-  console.log(`server running on port ${port}`);
-});
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URL);
+    app.listen(port, () => {
+      console.log(`server is listening on port ${port}...`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-// const start = async () => {
-//   try {
-//     await connectDB(process.env.MONGO_URL);
-//     app.listen(port, () => {
-//       console.log(`server is listening on port ${port}...`);
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// start();
+start();

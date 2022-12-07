@@ -1,5 +1,18 @@
+import React, { useContext } from "react";
+import { UserContext } from "../../context/user_context";
+import styles from "./styles.modules.scss";
+
 const Alert = () => {
-  return <div>Alert Goes Here</div>;
+  const { alertText, alertType } = useContext(UserContext);
+  return (
+    <div
+      className={
+        alertType === "danger" ? styles.alertDanger : styles.alertSuccess
+      }
+    >
+      {alertText}
+    </div>
+  );
 };
 
 export default Alert;

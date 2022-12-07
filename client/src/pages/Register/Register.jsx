@@ -1,36 +1,71 @@
-import { useState } from "react";
-import styles from "./styles.modules.scss";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./styles.module.scss";
+import clsx from "clsx";
 import Alert from "../../components/Alert/Alert";
+import { UserContext } from "../../context/user_context";
 
 const intitialState = {
   name: "",
+  lastName: "",
   email: "",
   password: "",
   isMember: true,
-  showAlert: true,
 };
 
 const Register = () => {
   const [values, setValues] = useState(intitialState);
+  const { isLoading, showAlert, displayAlert, clearAlert, setupUser, user } =
+    useContext(UserContext);
+  const navigate = useNavigate();
+
   //   global state and use navigate
 
   const handleChange = (e) => {
-    console.log(e.target);
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    const { name, lastName, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name && !lastName)) {
+      displayAlert();
+      return;
+    }
+    const currentUser = { name, lastName, email, password };
+    if (isMember) {
+      setupUser({
+        currentUser,
+        endPoint: "login",
+        alertText: "Login Successful. Redirecting",
+      });
+    } else {
+      setupUser({
+        currentUser,
+        endPoint: "register",
+        alertText: "Successfully Created Account. Redirecting",
+      });
+    }
   };
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
   };
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/recipes");
+      }, 3000);
+    }
+  }, [user, navigate]);
   return (
     <div className={styles.pageWrapper}>
       <form className={styles.form} onSubmit={onSubmit}>
-        <h3>{values.isMember ? "Login" : "Register"}</h3>
-        {values.showAlert && <Alert />}
+        <h3 className={clsx(styles.title, "container")}>
+          {values.isMember ? "Login" : "Register"}
+        </h3>
+        {showAlert && <Alert />}
         {!values.isMember && (
           <div className={styles.formRow}>
             <label htmlFor="name" className={styles.formLabel}>
@@ -45,6 +80,21 @@ const Register = () => {
             />
           </div>
         )}
+        {!values.isMember && (
+          <div className={styles.formRow}>
+            <label htmlFor="lastName" className={styles.formLabel}>
+              Last Name
+            </label>
+            <input
+              type="text"
+              value={values.lastName}
+              name="lastName"
+              onChange={handleChange}
+              className={styles.formInput}
+            />
+          </div>
+        )}
+
         <div className={styles.formRow}>
           <label htmlFor="email" className={styles.formLabel}>
             Email
@@ -69,17 +119,21 @@ const Register = () => {
             className={styles.formInput}
           />
         </div>
-        <button type="submit" className={styles.submitBtn}>
+        <button type="submit" className={clsx("btn")} disabled={isLoading}>
           Submit
         </button>
-        <p>{values.isMember ? "Not a member yet" : "Already a member"}</p>
-        <button
-          type="button"
-          onClick={toggleMember}
-          className={styles.memberBtn}
-        >
-          {values.isMember ? "Register" : "Login"}
-        </button>
+        <div className={styles.memberContainer}>
+          <p className={styles.memberText}>
+            {values.isMember ? "Not a member yet?" : "Already a member"}
+          </p>
+          <button
+            type="button"
+            onClick={toggleMember}
+            className={styles.memberBtn}
+          >
+            {values.isMember ? "Register" : "Login"}
+          </button>
+        </div>
       </form>
     </div>
   );

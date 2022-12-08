@@ -2,16 +2,12 @@
   padding: 40px 30px;
 }
 
-.textContainer {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 0px;
-  align-items: center;
-}
-
-.title {
-  font-size: 2rem;
-}
+// .textContainer {
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 20px 0px;
+//   align-items: center;
+// }
 
 .allBtn {
   background-color: white;
@@ -24,6 +20,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  padding: 30px 0px;
 }
 
 // No Favorites Container
@@ -32,7 +29,7 @@
   color: #00b4bf;
 }
 .noFavs {
-  height: 90vh;
+  height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,16 +41,5 @@
   flex-direction: column;
   margin: 0px 50px;
   text-align: center;
-  gap: 10px;
-}
-.noFavsTitle {
-  font-size: 2rem;
-}
-
-.exploreBtn {
-  color: white;
-  background-color: #00b4bf;
-  font-weight: 500;
-  padding: 10px 20px;
-  letter-spacing: 0.1rem;
+  gap: 25px;
 }

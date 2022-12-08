@@ -1,0 +1,28 @@
+.pageWrapper {
+  padding: 20px;
+  height: 600px;
+}
+
+.form {
+  display: grid;
+  align-items: center;
+  padding: 1rem 1rem;
+  gap: 1.5rem;
+  // margin: 1rem;
+}
+
+.memberText {
+  font-size: 1rem;
+}
+.memberContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+// buttons
+.memberBtn {
+  border: none;
+  background: var(--white);
+  color: var(--blue);
+}

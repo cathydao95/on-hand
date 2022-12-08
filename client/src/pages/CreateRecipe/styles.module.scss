@@ -1,12 +1,27 @@
 .pageWrapper {
-  height: 85vh;
+  height: 600px;
   padding: 20px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.form {
+  display: grid;
+  align-items: center;
+  padding: 1rem 1rem;
+  gap: 1.25rem;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.formInput {
+  width: 100%;
+  border: 1px solid var(--grey);
+  height: 30px;
+}
+.formRrow {
+  margin-bottom: 1rem;
 }
 
 .addBtn {
@@ -16,15 +31,4 @@ form {
   border: none;
   width: 100%;
   width: 100%;
-}
-.saveBtn {
-  background-color: #00b4bf;
-  color: white;
-  width: 100%;
-  height: 30px;
-  border-radius: 10px;
-  border: 2px;
-}
-
-form {
 }

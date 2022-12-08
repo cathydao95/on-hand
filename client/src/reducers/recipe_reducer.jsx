@@ -10,6 +10,8 @@ import {
   GET_SINGLE_RECIPE_BEGIN,
   GET_SINGLE_RECIPE_SUCCESS,
   GET_SINGLE_RECIPE_ERROR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
 } from "../actions";
 
 const recipe_reducer = (state, action) => {
@@ -135,6 +137,28 @@ const recipe_reducer = (state, action) => {
       ...state,
       favoriteList: tempfavorites,
       searchedRecipes: resetSearched,
+    };
+  }
+
+  if (action.type === HANDLE_CHANGE) {
+    return {
+      ...state,
+      [action.payload.name]: action.payload.value,
+    };
+  }
+
+  if (action.type === CLEAR_VALUES) {
+    const initialState = {
+      isEditing: false,
+      name: "",
+      yields: "",
+      time: "",
+      ingredients: [],
+      instructions: [],
+    };
+    return {
+      ...state,
+      ...initialState,
     };
   }
 };

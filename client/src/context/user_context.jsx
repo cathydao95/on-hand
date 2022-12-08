@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from "react";
+import React, { useReducer } from "react";
 import reducer from "../reducers/user_reducer";
 import axios from "axios";
 
@@ -8,7 +8,12 @@ import {
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from "../actions";
+
+// CHANGE CONTEXT IMPORTS TO MAKE MATCH
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
@@ -26,6 +31,35 @@ const UserContext = React.createContext();
 
 const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // axios instance
+  const authFetch = axios.create({
+    baseURL: "/api",
+  });
+
+  // axios interceptors
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers["Authorization"] = `Bearer ${state.token}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      console.log(error.response);
+      if (error.response.status === 401) {
+        logoutUser();
+      }
+      return Promise.reject(error);
+    }
+  );
 
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
@@ -50,10 +84,7 @@ const UserProvider = ({ children }) => {
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
-      const response = await axios.post(
-        `/api/v1/auth/${endPoint}`,
-        currentUser
-      );
+      const response = await axios.post(`/api/auth/${endPoint}`, currentUser);
       console.log(response);
       const { user, token } = response.data;
       dispatch({
@@ -71,14 +102,36 @@ const UserProvider = ({ children }) => {
     clearAlert();
   };
 
+  const updateUser = async (currentUser) => {
+    dispatch({ type: UPDATE_USER_BEGIN });
+    try {
+      const { data } = await authFetch.patch("/auth/updateUser", currentUser);
+
+      const { user, token } = data;
+      dispatch({ type: UPDATE_USER_SUCCESS, payload: { user, token } });
+
+      addUserToLocalStorage({ user, token });
+    } catch (error) {
+      if (error.response.status !== 401) {
+        dispatch({
+          type: UPDATE_USER_ERROR,
+          payload: { msg: error.response.data.msg },
+        });
+      }
+    }
+    clearAlert();
+  };
+
+  const logoutUser = () => {};
+
   return (
     <UserContext.Provider
       value={{
         ...state,
         displayAlert,
         clearAlert,
-
         setupUser,
+        updateUser,
       }}
     >
       {children}

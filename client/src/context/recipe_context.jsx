@@ -7,12 +7,12 @@ import {
   SEARCH_RECIPES_BEGIN,
   SEARCH_RECIPES_SUCCESS,
   SEARCH_RECIPES_ERROR,
-  GET_FAVORITES_BEGIN,
   GET_FAVORITES_SUCCESS,
-  GET_FAVORITES_ERROR,
   GET_SINGLE_RECIPE_BEGIN,
   GET_SINGLE_RECIPE_SUCCESS,
   GET_SINGLE_RECIPE_ERROR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
 } from "../actions";
 
 // turn data into an array
@@ -38,6 +38,12 @@ const getLocalStorage = () => {
 };
 
 const initialState = {
+  isEditing: false,
+  name: "",
+  yields: "",
+  time: "",
+  ingredients: [],
+  instructions: [],
   recipes: recipeList,
   searchedRecipes: shortRecipe,
   defaultSearch: shortRecipe,
@@ -87,6 +93,17 @@ export const RecipeProvider = ({ children }) => {
     }
   }, [state.singleRecipe]);
 
+  const handleChange = ({ name, value }) => {
+    dispatch({
+      type: HANDLE_CHANGE,
+      payload: { name, value },
+    });
+  };
+
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES });
+  };
+
   return (
     <RecipeContext.Provider
       value={{
@@ -95,6 +112,8 @@ export const RecipeProvider = ({ children }) => {
         searchRecipe,
         getSingleRecipe,
         getFavorites,
+        handleChange,
+        clearValues,
       }}
     >
       {children}

@@ -7,9 +7,17 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  GET_USER_FAVORITES,
+  ADD_TO_USER_FAVORITES,
 } from "../actions";
 
 const reducer = (state, action) => {
+  if (action.type === GET_USER_FAVORITES) {
+    return {
+      ...state,
+      favorites: action.payload.formattedRecipes,
+    };
+  }
   if (action.type === DISPLAY_ALERT) {
     return {
       ...state,
@@ -74,6 +82,13 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
+
+  if (action.type === ADD_TO_USER_FAVORITES)
+    return {
+      ...state,
+      user: action.payload.currentUser,
+      favorites: action.payload.formattedRecipes,
+    };
   throw new Error(`no such action : ${action.type}`);
 };
 

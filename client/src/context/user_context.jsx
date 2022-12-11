@@ -11,6 +11,8 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  GET_USER_FAVORITES,
+  ADD_TO_USER_FAVORITES,
 } from "../actions";
 
 // CHANGE CONTEXT IMPORTS TO MAKE MATCH
@@ -25,6 +27,7 @@ const initialState = {
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
+  favorites: [],
 };
 
 const UserContext = React.createContext();
@@ -122,6 +125,30 @@ const UserProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getUserFavorites = async (id) => {
+    console.log(id);
+    try {
+      const { data } = await authFetch.get("/auth/favorites", id);
+      const { formattedRecipes } = data;
+      dispatch({ type: GET_USER_FAVORITES, payload: { formattedRecipes } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addToFavorites = async (current) => {
+    console.log(current);
+    try {
+      const { data } = await authFetch.patch("/auth/updateFavorites", current);
+      const { formattedRecipes, currentUser } = data;
+      dispatch({
+        type: ADD_TO_USER_FAVORITES,
+        payload: { formattedRecipes, currentUser },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const logoutUser = () => {};
 
   return (
@@ -132,6 +159,8 @@ const UserProvider = ({ children }) => {
         clearAlert,
         setupUser,
         updateUser,
+        getUserFavorites,
+        addToFavorites,
       }}
     >
       {children}

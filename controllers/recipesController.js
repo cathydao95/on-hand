@@ -3,9 +3,9 @@ import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
 
 const createRecipe = async (req, res) => {
-  const { name, yields, time, ingredients, instructions } = req.body;
+  const { title, yields, time, ingredients, instructions } = req.body;
 
-  if (!name || !yields || !time || !ingredients || !instructions) {
+  if (!title || !yields || !time || !ingredients || !instructions) {
     throw new BadRequestError("Please provide all values");
   }
 
@@ -20,7 +20,33 @@ const deleteRecipe = async (req, res) => {
 };
 
 const getAllRecipes = async (req, res) => {
-  res.send("get all recipes");
+  // pagination
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 12;
+  const skip = (page - 1) * limit;
+
+  const recipes = await Recipes.find({}).skip(skip).limit(limit);
+  const allRecipes = await Recipes.find({});
+  const numOfPages = Math.ceil(allRecipes.length / limit);
+
+  // pagination
+  // const page = Number(req.query.page) || 5;
+  // const limit = Number(req.query.limit) || 10;
+  // const skip = (page - 1) * limit;
+
+  // console.log("skipp", skip, limit, page);
+  // result = result.limit(10);
+
+  // console.log("result", result);
+
+  // const recipes = await result;
+
+  // const totalRecipes = await Recipes.countDocuments(recipes);
+  // const numOfPages = Math.ceil(totalRecipes / limit);
+
+  res
+    .status(StatusCodes.OK)
+    .json({ recipes, allRecipes, totalRecipes: recipes.length, numOfPages });
 };
 
 const updateRecipe = async (req, res) => {

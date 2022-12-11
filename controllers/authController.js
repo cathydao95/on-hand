@@ -1,6 +1,8 @@
 import User from "../models/User.js";
+import Recipe from "../models/Recipes.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
+import mongoose from "mongoose";
 
 const register = async (req, res) => {
   const { name, lastName, email, password } = req.body;
@@ -17,8 +19,12 @@ const register = async (req, res) => {
   const user = await User.create({ name, lastName, email, password });
   const token = user.createJWT();
 
+  // res.status(StatusCodes.CREATED).json({
+  //   user: { email: user.email, lastName: user.lastName, name: user.name },
+  //   token,
+  // });
   res.status(StatusCodes.CREATED).json({
-    user: { email: user.email, lastName: user.lastName, name: user.name },
+    user,
     token,
   });
 };
@@ -63,4 +69,105 @@ const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token });
 };
 
-export { register, login, updateUser };
+const updateFavorites = async (req, res) => {
+  try {
+    const { recipeId, userId } = req.body;
+    const recipe = await Recipe.findById(recipeId);
+    const currentUser = await User.findById(userId);
+
+    if (currentUser.favorites.includes(recipeId)) {
+      currentUser.favorites = currentUser.favorites.filter(
+        (id) => id !== recipeId
+      );
+    } else {
+      currentUser.favorites.push(recipeId);
+    }
+    await currentUser.save();
+
+    const favorites = await Promise.all(
+      currentUser.favorites.map((id) => Recipe.findById(id))
+    );
+
+    const formattedRecipes = favorites.map(
+      ({
+        _id,
+        title,
+        image,
+        link,
+        nutrients,
+        yields,
+        time,
+        ingredients,
+        instructions,
+      }) => {
+        return {
+          _id,
+          title,
+          image,
+          link,
+          nutrients,
+          yields,
+          time,
+          ingredients,
+          instructions,
+        };
+      }
+    );
+
+    res.status(StatusCodes.OK).json({ formattedRecipes, currentUser });
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "didnt work" });
+  }
+};
+
+const getUserFavorites = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const currentUser = await User.findById(userId);
+
+    const favorites = await Promise.all(
+      currentUser.favorites.map((id) => Recipe.findById(id))
+    );
+
+    // const formattedRecipes = favorites.map(
+    //   ({
+    //     _id,
+    //     title,
+    //     image,
+    //     link,
+    //     nutrients,
+    //     yields,
+    //     time,
+    //     ingredients,
+    //     instructions,
+    //   }) => {
+    //     return {
+    //       _id,
+    //       title,
+    //       image,
+    //       link,
+    //       nutrients,
+    //       yields,
+    //       time,
+    //       ingredients,
+    //       instructions,
+    //     };
+    //   }
+    // );
+    // res.status(StatusCodes.OK).json({ formattedRecipes });
+    res.status(StatusCodes.OK).json({ currentUser, favorites });
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: error });
+  }
+};
+
+const createRecipe = async () => {};
+
+export {
+  register,
+  login,
+  updateUser,
+  updateFavorites,
+  createRecipe,
+  getUserFavorites,
+};

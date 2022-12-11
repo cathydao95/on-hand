@@ -34,6 +34,14 @@ const UserSchema = new mongoose.Schema({
     minLength: 6,
     select: false,
   },
+  favorites: {
+    type: Array,
+    default: [],
+  },
+  personalRecipes: {
+    type: Array,
+    default: [],
+  },
 });
 
 UserSchema.pre("save", async function () {

@@ -7,6 +7,8 @@ import mongoose from "mongoose";
 const register = async (req, res) => {
   const { name, lastName, email, password } = req.body;
 
+  let formattedRecipes = [];
+
   if (!name || !lastName || !email || !password) {
     throw new BadRequestError("Please provide all values");
   }
@@ -26,6 +28,7 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({
     user,
     token,
+    formattedRecipes,
   });
 };
 
@@ -37,6 +40,37 @@ const login = async (req, res) => {
   }
 
   const user = await User.findOne({ email }).select("+password");
+
+  const favorites = await Promise.all(
+    user.favorites.map((id) => Recipe.findById(id))
+  );
+
+  const formattedRecipes = favorites.map(
+    ({
+      _id,
+      title,
+      image,
+      link,
+      nutrients,
+      yields,
+      time,
+      ingredients,
+      instructions,
+    }) => {
+      return {
+        _id,
+        title,
+        image,
+        link,
+        nutrients,
+        yields,
+        time,
+        ingredients,
+        instructions,
+      };
+    }
+  );
+
   if (!user) {
     throw new BadRequestError("Invalid credentials");
   }
@@ -48,7 +82,7 @@ const login = async (req, res) => {
 
   const token = user.createJWT();
   user.password = undefined;
-  res.status(StatusCodes.OK).json({ user, token });
+  res.status(StatusCodes.OK).json({ user, token, formattedRecipes });
 };
 
 const updateUser = async (req, res) => {
@@ -129,33 +163,33 @@ const getUserFavorites = async (req, res) => {
       currentUser.favorites.map((id) => Recipe.findById(id))
     );
 
-    // const formattedRecipes = favorites.map(
-    //   ({
-    //     _id,
-    //     title,
-    //     image,
-    //     link,
-    //     nutrients,
-    //     yields,
-    //     time,
-    //     ingredients,
-    //     instructions,
-    //   }) => {
-    //     return {
-    //       _id,
-    //       title,
-    //       image,
-    //       link,
-    //       nutrients,
-    //       yields,
-    //       time,
-    //       ingredients,
-    //       instructions,
-    //     };
-    //   }
-    // );
-    // res.status(StatusCodes.OK).json({ formattedRecipes });
-    res.status(StatusCodes.OK).json({ currentUser, favorites });
+    const formattedRecipes = favorites.map(
+      ({
+        _id,
+        title,
+        image,
+        link,
+        nutrients,
+        yields,
+        time,
+        ingredients,
+        instructions,
+      }) => {
+        return {
+          _id,
+          title,
+          image,
+          link,
+          nutrients,
+          yields,
+          time,
+          ingredients,
+          instructions,
+        };
+      }
+    );
+    res.status(StatusCodes.OK).json({ formattedRecipes });
+    // res.status(StatusCodes.OK).json({ currentUser, favorites });
   } catch (error) {
     res.status(StatusCodes.BAD_REQUEST).json({ msg: error });
   }

@@ -9,15 +9,24 @@ import {
   UPDATE_USER_ERROR,
   GET_USER_FAVORITES,
   ADD_TO_USER_FAVORITES,
+  LOGOUT_USER,
 } from "../actions";
 
+import { initialState } from "../context/user_context";
+
 const reducer = (state, action) => {
+  // if (action.type === GET_USER_FAVORITES) {
+  //   return {
+  //     ...state,
+  //     favorites: action.payload.formattedRecipes,
+  //   };
   if (action.type === GET_USER_FAVORITES) {
-    return {
-      ...state,
-      favorites: action.payload.formattedRecipes,
-    };
+    // let tempFavorites = recipes.map((rec) => user.favorites.inludes(rec._id));
+
+    // console.log(tempFavorites);
+    return { ...state, favorites: action.payload.formattedRecipes };
   }
+
   if (action.type === DISPLAY_ALERT) {
     return {
       ...state,
@@ -36,10 +45,12 @@ const reducer = (state, action) => {
   }
 
   if (action.type === SETUP_USER_SUCCESS) {
+    console.log(action.payload.formattedRecipes);
     return {
       ...state,
       user: action.payload.user,
       token: action.payload.token,
+      favorites: action.payload.formattedRecipes,
       isLoading: false,
       showAlert: true,
       alertType: "success",
@@ -89,6 +100,10 @@ const reducer = (state, action) => {
       user: action.payload.currentUser,
       favorites: action.payload.formattedRecipes,
     };
+
+  if (action.type === LOGOUT_USER) {
+    return { ...initialState, user: null, token: null };
+  }
   throw new Error(`no such action : ${action.type}`);
 };
 

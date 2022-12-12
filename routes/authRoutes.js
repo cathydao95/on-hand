@@ -16,6 +16,6 @@ router.route("/login").post(login);
 router.route("/updateUser").patch(authenticate, updateUser);
 router.route("/updateFavorites").patch(authenticate, updateFavorites);
 router.route("/createRecipe").post(createRecipe);
-router.route("/favorites").get(authenticate, getUserFavorites);
+router.route("/getFavorites").patch(authenticate, getUserFavorites);
 
 export default router;

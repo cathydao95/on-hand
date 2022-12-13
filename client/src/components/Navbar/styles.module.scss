@@ -1,23 +1,91 @@
 .navContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #d9d9d9e5;
-  height: 80px;
-}
-
-.iconContainer {
-  flex-basis: 90%;
-  display: flex;
   justify-content: space-evenly;
 }
-// .test {
-//   color: #00b4bf !important;
-// }
 
-.link {
+.navCenter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
-.linkActive {
-  border-bottom: 4px solid #00b4bf;
+.toggleBtn {
+  background: transparent;
+  border-color: transparent;
+  font-size: 1.75rem;
+  color: var(--blue);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.navLinks {
+  flex-basis: 50%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.accountContainer {
+  flex-basis: 40%;
+}
+.logOutContainer {
+  position: relative;
+}
+.accountBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  background-color: var(--blue);
+  color: var(--white);
+  border: transparent;
+
+  font-size: 1rem;
+  padding: 10px 15px;
+}
+
+.dropDown {
+  visibility: hidden;
+}
+
+.showDropDown {
+  visibility: visible;
+  text-align: center;
+  background-color: var(--blue);
+  justify-content: space-evenly;
+  text-align: center;
+  background-color: var(--blue);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.btn {
+  text-align: center;
+  width: 100%;
+  color: var(--black);
+  background-color: var(--blue);
+  border: transparent;
+  font-size: 1rem;
+  text-transform: capitalize;
+  padding: 5px 0px 15px 0px;
+}
+
+.settingsBtn {
+  text-align: center;
+  text-decoration: none;
+  color: var(--black);
+  background-color: var(--blue);
+  margin: 0;
+  font-size: 1rem;
+  padding: 15px 0px 5px 0px;
+}
+
+.showDropDown:hover,
+.btn:hover,
+.settingsBtn:hover {
+  background-color: rgb(151, 224, 241);
 }

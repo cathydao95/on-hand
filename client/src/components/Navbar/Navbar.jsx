@@ -1,5 +1,6 @@
+import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styles from "./styles.module.scss";
 import { IconContext } from "react-icons";
 import {
@@ -7,51 +8,84 @@ import {
   AiOutlineSearch,
   AiFillHeart,
   AiOutlinePlus,
+  AiOutlineUser,
 } from "react-icons/ai";
+import IconRoutes from "../IconRoutes/IconRoutes";
+import { UserContext } from "../../context/user_context";
 
 const Navbar = () => {
+  const [showDropDown, setShowDropDown] = useState(false);
+  const { logOutUser, user } = useContext(UserContext);
+
+  console.log(showDropDown);
   return (
     <nav className={styles.navContainer}>
-      <div className={styles.iconContainer}>
-        <IconContext.Provider value={{ color: "grey", size: "25px" }}>
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              isActive ? styles.linkActive : styles.link
-            }
-          >
-            <AiFillHome
-              className={({ isActive }) =>
-                isActive ? styles.linkActive : styles.link
-              }
-            />
-          </NavLink>
-          <NavLink
-            to="/recipes"
-            className={({ isActive }) =>
-              isActive ? styles.linkActive : styles.link
-            }
-          >
-            <AiOutlineSearch />
-          </NavLink>
-          <NavLink
-            to="/favorites"
-            className={({ isActive }) =>
-              isActive ? styles.linkActive : styles.link
-            }
-          >
-            <AiFillHeart />
-          </NavLink>
-          <NavLink
-            to="/create"
-            className={({ isActive }) =>
-              isActive ? styles.linkActive : styles.link
-            }
-          >
-            <AiOutlinePlus />
-          </NavLink>
-        </IconContext.Provider>
+      <div className={styles.navCenter}>
+        <button type="button" className={styles.toggleBtn}>
+          <FaAlignLeft />
+        </button>
+        <h1>On Hand</h1>
       </div>
+
+      <div className={styles.navLinks}>
+        <NavLink
+          to="/dashboard"
+          className={({ isActive }) =>
+            isActive ? styles.linkActive : styles.link
+          }
+        >
+          Dashboard
+        </NavLink>
+        <NavLink
+          to="/recipes"
+          className={({ isActive }) =>
+            isActive ? styles.linkActive : styles.link
+          }
+        >
+          Search
+        </NavLink>
+        <NavLink
+          to="/favorites"
+          className={({ isActive }) =>
+            isActive ? styles.linkActive : styles.link
+          }
+        >
+          Favorites
+        </NavLink>
+        <NavLink
+          to="/create"
+          className={({ isActive }) =>
+            isActive ? styles.linkActive : styles.link
+          }
+        >
+          Create Recipe
+        </NavLink>
+      </div>
+      {user && (
+        <div>
+          <div className={styles.accountContainer}>
+            <button
+              type="button"
+              onClick={() => setShowDropDown(!showDropDown)}
+              className={styles.accountBtn}
+            >
+              <FaUserCircle />
+              {user?.name}
+              <FaCaretDown />
+            </button>
+            <div
+              className={showDropDown ? styles.showDropDown : styles.dropDown}
+            >
+              <NavLink className={styles.settingsBtn} to="/account">
+                Account
+              </NavLink>
+              <button type="button" className={styles.btn} onClick={logOutUser}>
+                logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

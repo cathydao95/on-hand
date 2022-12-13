@@ -1,10 +1,11 @@
 .recipeContainer {
   background-color: #f6f6f6;
   padding: 15px;
+  height: 100%;
 }
 .recipeWrapper {
   display: flex;
-  gap: 5%;
+  gap: 15%;
 }
 .recipeImage {
   width: 80px;
@@ -28,15 +29,46 @@
 // heart icon
 .iconContainer {
   border: none;
-  flex-basis: 10%;
-  background-color: #f6f6f6;
+  position: absolute;
+  transform: translate(-30%, -0%);
+  -ms-transform: translate(-30%, -0%);
+  background-color: none;
 }
+
 .heartIcon {
   color: black;
   font-size: 1.5rem;
+  background-color: none;
 }
 
 .fillHeartIcon {
   color: red;
   font-size: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .recipeContainer {
+    padding: 30px;
+    text-align: center;
+  }
+  .recipeWrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .recipeImage {
+    width: 180px;
+    height: 180px;
+    border-radius: 0;
+  }
+
+  .info {
+    justify-content: center;
+  }
+  .iconContainer {
+    position: absolute;
+    transform: translate(-100%, -0%);
+    -ms-transform: translate(-100%, -0%);
+  }
 }

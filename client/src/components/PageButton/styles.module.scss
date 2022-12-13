@@ -1,0 +1,40 @@
+.containerWrapper {
+  height: 6rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.inputContainer {
+  flex-basis: 30%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.input {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.prevBtn,
+.nextBtn {
+  width: 100px;
+  height: 40px;
+  background: var(--blue);
+  border-color: transparent;
+  color: var(--white);
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.select {
+  font-size: 1rem;
+}

@@ -1,6 +1,7 @@
 import Recipes from "../models/Recipes.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
+import mongoose from "mongoose";
 
 const createRecipe = async (req, res) => {
   const { title, yields, time, ingredients, instructions } = req.body;
@@ -49,8 +50,26 @@ const getAllRecipes = async (req, res) => {
     .json({ recipes, allRecipes, totalRecipes: recipes.length, numOfPages });
 };
 
+const getSingleRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+
+    const recipe = await Recipes.findById(id);
+    res.status(StatusCodes.OK).json({ recipe });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const updateRecipe = async (req, res) => {
   res.send("update recipe");
 };
 
-export { createRecipe, deleteRecipe, getAllRecipes, updateRecipe };
+export {
+  createRecipe,
+  deleteRecipe,
+  getAllRecipes,
+  getSingleRecipe,
+  updateRecipe,
+};

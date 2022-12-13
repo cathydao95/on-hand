@@ -5,25 +5,25 @@ import RecipeContext from "../../context/recipe_context";
 import { AiFillCloseSquare } from "react-icons/ai";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { UserContext } from "../../context/user_context";
+import Loading from "../../components/Loading/Loading";
 // import { useRecipeContext } from "../../context/recipe_context";
 // individual receipe page for an item, may need to rename
 
 const FoodRecipe = () => {
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
 
-  console.log(id);
+  const recipeId = id;
+  console.log("recipeIDDDD", recipeId);
 
   const { addToFavorites, user } = useContext(UserContext);
-  const { getSingleRecipe, singleRecipe } = useContext(RecipeContext);
+  const { getSingleRecipe, isLoading, singleRecipe } =
+    useContext(RecipeContext);
 
   console.log("single", singleRecipe);
 
   useEffect(() => {
-    getSingleRecipe(id);
-    setLoading(false);
-    console.log("test");
-  }, [id]);
+    getSingleRecipe(recipeId);
+  }, [recipeId]);
 
   const {
     _id,
@@ -38,16 +38,20 @@ const FoodRecipe = () => {
     yields,
   } = singleRecipe;
 
+  console.log(instructions);
+
   const currentUser = {
     recipeId: _id,
     userId: user._id,
   };
 
-  // console.log("favorite", favorite);
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className={styles.pageWrapper}>
-      {!loading && (
+      {!isLoading && (
         <div>
           <div>
             <Link to="/recipes" className={styles.exitContainer}>
@@ -74,10 +78,15 @@ const FoodRecipe = () => {
                 <h2>Servings: {yields}</h2>
               </div>
               <div className={styles.ingList}>
-                {ingredients.map((ingredient, index) => {
-                  return <li key={index}>{ingredient}</li>;
-                })}
+                {ingredients &&
+                  ingredients.map((ingredient, index) => {
+                    return <li key={index}>{ingredient}</li>;
+                  })}
               </div>
+              <div className={styles.ingContainer}>
+                <h2>Instructions:</h2>
+              </div>
+              <div className={styles.ingList}>{instructions}</div>
             </div>
 
             <a

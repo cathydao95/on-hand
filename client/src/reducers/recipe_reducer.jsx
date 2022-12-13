@@ -1,12 +1,7 @@
-import { INTERNALS } from "next/dist/server/web/spec-extension/request";
 import {
-  // FAVORITE_RECIPE,
   SEARCH_RECIPES_BEGIN,
   SEARCH_RECIPES_SUCCESS,
   SEARCH_RECIPES_ERROR,
-  // GET_FAVORITES_BEGIN,
-  GET_FAVORITES_SUCCESS,
-  // GET_FAVORITES_ERROR,
   GET_SINGLE_RECIPE_BEGIN,
   GET_SINGLE_RECIPE_SUCCESS,
   GET_SINGLE_RECIPE_ERROR,
@@ -18,7 +13,10 @@ import {
   GET_ALL_RECIPES_SUCCESS,
   GET_ALL_RECIPES_BEGIN,
   CHANGE_PAGE,
+  RESET_PAGE,
+  CHANGE_LIMIT,
 } from "../actions";
+import { initialState } from "../context/recipe_context";
 
 const recipe_reducer = (state, action) => {
   if (action.type === GET_ALL_RECIPES_BEGIN) {
@@ -42,6 +40,10 @@ const recipe_reducer = (state, action) => {
     return { ...state, page: action.payload.page };
   }
 
+  if (action.type === CHANGE_LIMIT) {
+    console.log(action.payload.limit);
+    return { ...state, limit: action.payload.limit };
+  }
   if (action.type === SEARCH_RECIPES_BEGIN) {
     return { ...state };
   }
@@ -89,82 +91,37 @@ const recipe_reducer = (state, action) => {
     //       : { ...rec }
     //   );
     // });
-
-    // NOTE: this one is wrong becasue it push in duplicates into array since mapping through each ingredient and some ingredients call for multiple kinds of sugar
-    // recipes.map((rec) => {
-    //   return rec.ingredients.filter((ing) => {
-    //     return ing.includes(action.payload)
-    //       ? tempSearch.push({ ...rec })
-    //       : { ...rec };
-    //   });
-    // });
   }
 
   if (action.type === GET_SINGLE_RECIPE_BEGIN) {
-    const { allRecipes, singleRecipe } = state;
-
-    // *****is it ok to set search back to inital here?? **
-
-    // let resetSearched = allRecipes.slice(0, 3);
     return {
       ...state,
+      isLoading: true,
     };
   }
 
   if (action.type === GET_SINGLE_RECIPE_SUCCESS) {
-    const { allRecipes, singleRecipe } = state;
-
-    let tempRecipe = allRecipes.find((rec) => rec._id == action.payload);
-
-    return { ...state, singleRecipe: tempRecipe };
+    return { ...state, isLoading: false, singleRecipe: action.payload.recipe };
   }
+
+  // if (action.type === GET_SINGLE_RECIPE_SUCCESS) {
+  //   const { allRecipes } = state;
+  //   console.log("pay", action.payload);
+
+  //   console.log(allRecipes);
+
+  //   allRecipes.map((rec) => console.log("typeof", typeof rec._id));
+
+  //   let tempRecipe = allRecipes.find((rec) =>
+  //     console.log("lol", rec._id === action.payload, rec._id, action.payload)
+  //   );
+
+  //   return { ...state, isLoading: false, singleRecipe: tempRecipe };
+  // }
 
   if (action.type === GET_SINGLE_RECIPE_ERROR) {
     return { ...state };
   }
-
-  // favorite/unfavorite recipe
-  // if (action.type === FAVORITE_RECIPE) {
-  //   const { allRecipes, searchedRecipes, singleRecipe } = state;
-
-  //   let temp = allRecipes.map((rec) => {
-  //     return rec._id === action.payload
-  //       ? { ...rec, favorite: !rec.favorite }
-  //       : { ...rec };
-  //   });
-
-  //   let temp2 = searchedRecipes.map((rec) => {
-  //     return rec._id === action.payload
-  //       ? { ...rec, favorite: !rec.favorite }
-  //       : { ...rec };
-  //   });
-
-  //   return {
-  //     ...state,
-  //     allRecipes: temp,
-  //     searchedRecipes: temp2,
-  //     singleRecipe: { ...singleRecipe, favorite: !singleRecipe.favorite },
-  //   };
-  // }
-
-  // get favorites recipe list
-  // if (action.type === GET_FAVORITES_SUCCESS) {
-  //   const { allRecipes, favoriteList } = state;
-
-  //   let tempfavorites = allRecipes.filter((rec) => {
-  //     return rec.favorite === true;
-  //   });
-
-  //   // *****is it ok to set search back to inital here?? **
-
-  //   let resetSearched = allRecipes.slice(0, 3);
-
-  //   return {
-  //     ...state,
-  //     favoriteList: tempfavorites,
-  //     searchedRecipes: resetSearched,
-  //   };
-  // }
 
   if (action.type === HANDLE_CHANGE) {
     return {
@@ -217,6 +174,10 @@ const recipe_reducer = (state, action) => {
       alertType: "danger",
       alertText: action.payload.msg,
     };
+  }
+
+  if (action.type === RESET_PAGE) {
+    return { ...initialState };
   }
 };
 

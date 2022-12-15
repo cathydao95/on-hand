@@ -1,3 +1,6 @@
+.pageWrapper {
+  padding-bottom: 100px;
+}
 .recipeContainer {
   padding: 20px;
 }
@@ -57,6 +60,9 @@
   padding: 20px 0px;
 }
 
+.step {
+  padding: 0.25rem 0;
+}
 .recipeBtn {
   background-color: #61b3b8;
   text-decoration: none;

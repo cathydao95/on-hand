@@ -1,6 +1,6 @@
 .recipeContainer {
   background-color: #f6f6f6;
-  padding: 15px;
+  padding: 10px;
   height: 100%;
 }
 .recipeWrapper {
@@ -20,10 +20,19 @@
   gap: 10px;
 }
 
+.recipeTitle {
+  font-size: 1rem;
+}
+
 .info {
   display: flex;
   gap: 25px;
   color: #868686;
+}
+
+.calorieInfo,
+.timeInfo {
+  font-size: 0.9rem;
 }
 
 // heart icon

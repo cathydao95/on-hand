@@ -66,10 +66,15 @@ const updateRecipe = async (req, res) => {
   res.send("update recipe");
 };
 
+const getSearchedRecipes = async (req, res) => {
+  res.send("searched recipes");
+};
+
 export {
   createRecipe,
   deleteRecipe,
   getAllRecipes,
   getSingleRecipe,
   updateRecipe,
+  getSearchedRecipes,
 };

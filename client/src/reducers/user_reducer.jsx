@@ -97,7 +97,8 @@ const reducer = (state, action) => {
   if (action.type === ADD_TO_USER_FAVORITES)
     return {
       ...state,
-      user: action.payload.currentUser,
+      user: action.payload.user,
+      token: action.payload.token,
       favorites: action.payload.formattedRecipes,
     };
 

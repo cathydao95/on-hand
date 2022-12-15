@@ -13,32 +13,19 @@ const FoodRecipe = () => {
   const { id } = useParams();
 
   const recipeId = id;
-  console.log("recipeIDDDD", recipeId);
 
   const { addToFavorites, user } = useContext(UserContext);
   const { getSingleRecipe, isLoading, singleRecipe } =
     useContext(RecipeContext);
 
-  console.log("single", singleRecipe);
-
   useEffect(() => {
     getSingleRecipe(recipeId);
-  }, [recipeId]);
+  }, []);
 
-  const {
-    _id,
-    title,
-    image,
-    favorite,
-    link,
-    time,
-    instructions,
-    ingredients,
-    nutrients,
-    yields,
-  } = singleRecipe;
+  const { _id, title, image, link, time, instructions, ingredients, yields } =
+    singleRecipe;
 
-  console.log(instructions);
+  let isFavorite = user.favorites.includes(_id);
 
   const currentUser = {
     recipeId: _id,
@@ -51,10 +38,10 @@ const FoodRecipe = () => {
 
   return (
     <div className={styles.pageWrapper}>
-      {!isLoading && (
+      {Object.keys(singleRecipe).length !== 0 ? (
         <div>
           <div>
-            <Link to="/recipes" className={styles.exitContainer}>
+            <Link to="/search" className={styles.exitContainer}>
               <AiFillCloseSquare className={styles.exitIcon} />
             </Link>
             <img className={styles.recipeImage} src={image} alt={title} />
@@ -63,7 +50,7 @@ const FoodRecipe = () => {
               className={styles.heartContainer}
             >
               <BsSuitHeartFill
-                className={favorite ? styles.fillHeartIcon : styles.heartIcon}
+                className={isFavorite ? styles.fillHeartIcon : styles.heartIcon}
               />
             </button>
           </div>
@@ -86,7 +73,16 @@ const FoodRecipe = () => {
               <div className={styles.ingContainer}>
                 <h2>Instructions:</h2>
               </div>
-              <div className={styles.ingList}>{instructions}</div>
+              <div className={styles.ingList}>
+                {instructions &&
+                  instructions.map((step, index) => {
+                    return (
+                      <div key={index} className={styles.step}>
+                        {index + 1}. {step}
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
 
             <a
@@ -98,6 +94,10 @@ const FoodRecipe = () => {
               See Full Recipe
             </a>
           </div>
+        </div>
+      ) : (
+        <div>
+          <Loading />
         </div>
       )}
     </div>

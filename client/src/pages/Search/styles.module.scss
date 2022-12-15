@@ -1,70 +1,55 @@
 .pageWrapper {
-  padding: 20px;
-  // height: 85vh;
-}
-
-.formControl {
-  display: flex;
-  justify-content: center;
-
-  background-color: white;
-}
-
-// Search Bar
-
-.searchIcon {
-  flex-basis: 10%;
-}
-.searchInput {
-  flex-basis: 90%;
-  height: 2rem;
-  text-align: left;
-  border: 1px solid #00b4bf;
-  padding-left: 10px;
-
-  outline: none;
-}
-
-.searchBtn {
-  flex-basis: 10%;
-  background-color: #00b4bf;
-  color: white;
-  border: none;
-}
-
-// Recipe Containers
-.recipesContainer {
-  padding: 30px 0px 20px 0px;
-}
-.singleRecipeContainer {
-  padding: 10px 0px;
-}
-
-// expand list/see all button
-.btnContainer {
-  text-align: center;
-}
-.allBtn {
-  padding-top: 20px;
-  color: #00b4bf;
-  border: none;
-  background-color: white;
-  font-weight: 700;
-}
-
-// no recipes found container
-.noRecipes {
-  height: 53vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  gap: 20px;
-  font-size: 2rem;
 }
 
-.sadIcon {
-  font-size: 5rem;
-  color: #00b4bf;
+.title {
+  padding: 40px 0px 0px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formControl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  gap: 1rem;
+  padding: 10px 0 40px 0;
+}
+
+// Search Input/Bar if re-implemented
+
+// .searchIcon {
+//   flex-basis: 10%;
+// }
+// .searchInput {
+//   flex-basis: 90%;
+//   height: 2rem;
+//   text-align: left;
+//   border: 1px solid #00b4bf;
+//   padding-left: 10px;
+
+//   outline: none;
+// }
+
+.searchBtn {
+  font-size: 1rem;
+  background-color: #00b4bf;
+  justify-content: center;
+  display: flex;
+  gap: 10px;
+  color: white;
+  border: none;
+  width: 70%;
+  padding: 10px;
+}
+
+.clearBtn {
+  padding: 10px;
+  width: 200px;
 }

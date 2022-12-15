@@ -1,106 +1,130 @@
 import { useEffect, useState } from "react";
-// import { RecipeContext } from "../../context/recipe_context";
-import SingleRecipe from "../SingleRecipe/SingleRecipe";
-import data from "../../Recipes.json";
 import styles from "./styles.module.scss";
+import clsx from "clsx";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useContext } from "react";
 import RecipeContext from "../../context/recipe_context";
-import { TfiFaceSad } from "react-icons/tfi";
-// import { useRecipeContext } from "../../context/recipe_context";
+import IngredientList from "../../components/IngredientList/IngredientList";
+import Loading from "../../components/Loading/Loading";
+import SearchedRecipes from "../../components/SearchedRecipes/SearchedRecipes";
 
 const Search = () => {
-  const [userInput, setUserInput] = useState("");
   const [ingredients, setIngredients] = useState([]);
-  const [expand, setExpand] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
-  const { searchRecipe, searchedRecipes } = useContext(RecipeContext);
+  const {
+    clearValues,
+    searchRecipes,
+    searchedRecipes,
+    getAllRecipes,
+    isLoading,
+  } = useContext(RecipeContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (ingredients) {
-      searchRecipe(ingredients);
+      searchRecipes(ingredients);
+      setShowSearch(true);
     }
+    // if (ingredients) {
+    //   searchRecipes(ingredients);
+    // }
+    // setShowSearch(true);
   };
 
-  const handleChange = (e) => {
-    setUserInput(e.target.value);
+  const clearInput = () => {
+    setShowSearch(false);
+
+    setIngredients([]);
+    clearValues();
   };
 
-  const expandList = () => {
-    setExpand((prevExpand) => !prevExpand);
+  const clearSearchResults = () => {
+    setShowSearch(false);
+    clearValues();
   };
+
+  // const handleChange = (e) => {
+  //   setUserInput(e.target.value);
+  // };
 
   useEffect(() => {
-    setIngredients(() => userInput.split(","));
-  }, [userInput]);
+    // clearValues();
+    getAllRecipes();
+    if (searchedRecipes.length > 0) {
+      setShowSearch(true);
+    }
+  }, []);
+
+  console.log(showSearch);
+
+  // useEffect(() => {
+  //   setIngredients(userInput);
+  // }, [userInput]);
+
+  console.log(ingredients);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
-    <div className={styles.pageWrapper}>
-      <div className={styles.textContainer}>
-        <h1 className={styles.titleText}>Search</h1>
-        <h3>What is in your kitchen?</h3>
-        <p>Enter some ingredients</p>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.formControl}>
-            {/* <AiOutlineSearch className={styles.searchIcon} /> */}
-            <input
+    <div className={clsx(styles.pageWrapper, "pageWrapper")}>
+      <div className={clsx(styles.title, "title")}>
+        <h3>Let's get cooking!</h3>
+        <p> What ingredients do you have on hand?</p>
+      </div>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <div className={styles.formControl}>
+          {/* remove for now until can implment but text and search function */}
+
+          {/* <input
               className={styles.searchInput}
               type="text"
               placeholder="Type your ingredients, separated by commas"
               onChange={(e) => handleChange(e)}
               value={userInput}
-            />
-            <button className={styles.searchBtn}>
+            /> */}
+          {!showSearch && searchedRecipes.length < 1 && (
+            <button
+              disabled={ingredients.length < 1}
+              className={styles.searchBtn}
+              type="submit"
+            >
+              <span>Search for Recipes</span>
               <AiOutlineSearch className={styles.searchIcon} />
             </button>
-          </div>
-        </form>
-      </div>
-      <div className={styles.recipesContainer}>
-        <div>
-          <div>
-            {searchedRecipes.length > 0 ? (
-              <div>
-                {expand
-                  ? searchedRecipes.map((ele, index) => {
-                      return (
-                        <div
-                          className={styles.singleRecipeContainer}
-                          key={index}
-                        >
-                          <SingleRecipe key={index} {...ele} />
-                        </div>
-                      );
-                    })
-                  : searchedRecipes.slice(0, 3).map((ele, index) => {
-                      return (
-                        <div
-                          className={styles.singleRecipeContainer}
-                          key={index}
-                        >
-                          <SingleRecipe key={index} {...ele} />
-                        </div>
-                      );
-                    })}
-              </div>
-            ) : (
-              <div className={styles.noRecipes}>
-                <TfiFaceSad className={styles.sadIcon} />
-                <p>No Recipes Found. Please try again</p>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className={styles.btnContainer}>
-          {searchedRecipes.length > 3 && (
-            <button className={styles.allBtn} onClick={expandList}>
-              {expand ? "Collapse" : "See All"}
-            </button>
+          )}
+
+          {!showSearch ? (
+            <div>
+              <IngredientList
+                setIngredients={setIngredients}
+                ingredients={ingredients}
+              />
+            </div>
+          ) : (
+            <div className={styles.searchResults}>
+              <SearchedRecipes />
+            </div>
           )}
         </div>
-      </div>
+      </form>
+      {searchedRecipes.length > 0 ? (
+        <button
+          onClick={() => clearSearchResults()}
+          className={clsx(styles.clearBtn, "btn")}
+        >
+          Clear Search
+        </button>
+      ) : (
+        <button
+          onClick={() => clearInput()}
+          className={clsx(styles.clearBtn, "btn")}
+        >
+          {!showSearch ? "Clear All Values" : "Restart Search"}
+        </button>
+      )}
     </div>
   );
 };

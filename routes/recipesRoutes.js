@@ -7,6 +7,7 @@ import {
   deleteRecipe,
   getAllRecipes,
   updateRecipe,
+  getSearchedRecipes,
 } from "../controllers/recipesController.js";
 
 router.route("/").post(createRecipe).get(getAllRecipes);
@@ -17,4 +18,5 @@ router
   .patch(updateRecipe)
   .get(getSingleRecipe);
 
+router.route("/test").get(getSearchedRecipes);
 export default router;

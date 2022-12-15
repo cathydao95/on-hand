@@ -24,7 +24,7 @@ const SingleRecipe = ({
     userId: user._id,
   };
 
-  let isFavorite = user.favorites.includes(_id);
+  let isFavorite = user.favorites && user.favorites.includes(_id);
 
   return (
     <div className={styles.recipeContainer}>

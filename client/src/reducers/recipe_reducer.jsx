@@ -45,10 +45,10 @@ const recipe_reducer = (state, action) => {
     return { ...state, limit: action.payload.limit };
   }
   if (action.type === SEARCH_RECIPES_BEGIN) {
-    return { ...state };
+    return { ...state, isLoading: true };
   }
   if (action.type === SEARCH_RECIPES_SUCCESS) {
-    const { allRecipes, searchedRecipes } = state;
+    const { allRecipes } = state;
     let tempSearch = [];
 
     let defaultIng = ["water", "oil", "salt", "pepper"];
@@ -81,7 +81,7 @@ const recipe_reducer = (state, action) => {
     // );
 
     console.log(tempSearch);
-    return { ...state, searchedRecipes: tempSearch };
+    return { ...state, searchedRecipes: tempSearch, isLoading: false };
 
     // map through each item in action payload and then map through each recipe... if ingredients contain the action.payload, push into tempSearch array
     // action.payload.map((item) => {
@@ -138,6 +138,7 @@ const recipe_reducer = (state, action) => {
       time: "",
       ingredients: "",
       instructions: "",
+      searchedRecipes: [],
     };
     return {
       ...state,

@@ -107,19 +107,17 @@ const updateFavorites = async (req, res) => {
   try {
     const { recipeId, userId } = req.body;
     const recipe = await Recipe.findById(recipeId);
-    const currentUser = await User.findById(userId);
+    const user = await User.findById(userId);
 
-    if (currentUser.favorites.includes(recipeId)) {
-      currentUser.favorites = currentUser.favorites.filter(
-        (id) => id !== recipeId
-      );
+    if (user.favorites.includes(recipeId)) {
+      user.favorites = user.favorites.filter((id) => id !== recipeId);
     } else {
-      currentUser.favorites.push(recipeId);
+      user.favorites.push(recipeId);
     }
-    await currentUser.save();
+    await user.save();
 
     const favorites = await Promise.all(
-      currentUser.favorites.map((id) => Recipe.findById(id))
+      user.favorites.map((id) => Recipe.findById(id))
     );
 
     const formattedRecipes = favorites.map(
@@ -148,7 +146,9 @@ const updateFavorites = async (req, res) => {
       }
     );
 
-    res.status(StatusCodes.OK).json({ formattedRecipes, currentUser });
+    const token = user.createJWT();
+
+    res.status(StatusCodes.OK).json({ formattedRecipes, user, token });
   } catch (error) {
     res.status(StatusCodes.BAD_REQUEST).json({ msg: "didnt work" });
   }
@@ -157,10 +157,10 @@ const updateFavorites = async (req, res) => {
 const getUserFavorites = async (req, res) => {
   try {
     const { userId } = req.body;
-    const currentUser = await User.findById(userId);
+    const user = await User.findById(userId);
 
     const favorites = await Promise.all(
-      currentUser.favorites.map((id) => Recipe.findById(id))
+      user.favorites.map((id) => Recipe.findById(id))
     );
 
     const formattedRecipes = favorites.map(
@@ -189,7 +189,7 @@ const getUserFavorites = async (req, res) => {
       }
     );
     res.status(StatusCodes.OK).json({ formattedRecipes });
-    // res.status(StatusCodes.OK).json({ currentUser, favorites });
+    // res.status(StatusCodes.OK).json({ user, favorites });
   } catch (error) {
     res.status(StatusCodes.BAD_REQUEST).json({ msg: error });
   }

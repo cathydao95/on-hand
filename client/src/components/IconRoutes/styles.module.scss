@@ -1,0 +1,36 @@
+.navContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // background-color: #d9d9d9e5;
+  height: 80px;
+}
+
+.iconContainer {
+  flex-basis: 90%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.linkActive {
+  border-bottom: 4px solid #00b4bf;
+}
+
+@media (min-width: 600px) {
+  .navContainer {
+    display: none;
+  }
+}
+
+.linkContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.link,
+.linkActive {
+  text-decoration: none;
+  font-size: 0.75rem;
+  color: black;
+}

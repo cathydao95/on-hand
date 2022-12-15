@@ -37,7 +37,7 @@ const PageButton = () => {
     <div className={styles.containerWrapper}>
       <button className={styles.prevBtn} onClick={prevPage}>
         <HiChevronDoubleLeft />
-        prev
+        {/* prev */}
       </button>
       <form className={styles.inputContainer} onSubmit={(e) => handleSubmit(e)}>
         <span>Page</span>
@@ -66,47 +66,12 @@ const PageButton = () => {
           <option value="60">60</option>
         </select>
       </form>
-      {/* <div className={styles.btnContainer}>
-        {pages.map((pageNumber) => {
-          return (
-            <button
-              type="button"
-              key={pageNumber}
-              onClick={() => changePage(pageNumber)}
-            >
-              {pageNumber}
-            </button>
-          );
-        })}
-      </div> */}
+
       <button className={styles.nextBtn} onClick={nextPage}>
-        next
+        {/* next */}
         <HiChevronDoubleRight />
       </button>
     </div>
-    //   <div className={styles.containerWrapper}>
-    //   <button className={styles.prevBtn} onClick={prevPage}>
-    //     <HiChevronDoubleLeft />
-    //     prev
-    //   </button>
-    //   <div className={styles.btnContainer}>
-    //     {pages.map((pageNumber) => {
-    //       return (
-    //         <button
-    //           type="button"
-    //           key={pageNumber}
-    //           onClick={() => changePage(pageNumber)}
-    //         >
-    //           {pageNumber}
-    //         </button>
-    //       );
-    //     })}
-    //   </div>
-    //   <button className={styles.nextBtn} onClick={nextPage}>
-    //     next
-    //     <HiChevronDoubleRight />
-    //   </button>
-    // </div>
   );
 };
 

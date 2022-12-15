@@ -13,12 +13,14 @@ import {
   UPDATE_USER_ERROR,
   GET_USER_FAVORITES,
   ADD_TO_USER_FAVORITES,
+  LOGOUT_USER,
 } from "../actions";
 
 // CHANGE CONTEXT IMPORTS TO MAKE MATCH
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
+const favorites = localStorage.getItem("favorites");
 
 const initialState = {
   isLoading: false,
@@ -27,7 +29,7 @@ const initialState = {
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
-  favorites: [],
+  favorites: favorites ? JSON.parse(favorites) : [],
 };
 
 const UserContext = React.createContext();
@@ -58,7 +60,7 @@ const UserProvider = ({ children }) => {
     (error) => {
       console.log(error.response);
       if (error.response.status === 401) {
-        logoutUser();
+        logOutUser();
       }
       return Promise.reject(error);
     }
@@ -74,14 +76,20 @@ const UserProvider = ({ children }) => {
       dispatch({ type: CLEAR_ALERT });
     }, 3000);
   };
-  const addUserToLocalStorage = ({ user, token }) => {
+  const addUserToLocalStorage = ({ user, token, formattedRecipes }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
+    localStorage.setItem("favorites", JSON.stringify(formattedRecipes));
   };
 
-  const removeUserFromLocalStorage = ({ user, token }) => {
+  const removeUserFromLocalStorage = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("favorites");
+  };
+  const logOutUser = () => {
+    dispatch({ type: LOGOUT_USER });
+    removeUserFromLocalStorage();
   };
 
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
@@ -89,12 +97,12 @@ const UserProvider = ({ children }) => {
     try {
       const response = await axios.post(`/api/auth/${endPoint}`, currentUser);
       console.log(response);
-      const { user, token } = response.data;
+      const { user, token, formattedRecipes } = response.data;
       dispatch({
         type: SETUP_USER_SUCCESS,
-        payload: { user, token, alertText },
+        payload: { user, token, alertText, formattedRecipes },
       });
-      addUserToLocalStorage({ user, token });
+      addUserToLocalStorage({ user, token, formattedRecipes });
     } catch (error) {
       console.log(error);
       dispatch({
@@ -105,6 +113,7 @@ const UserProvider = ({ children }) => {
     clearAlert();
   };
 
+  // may need to add favortes/formatted recipes in as token
   const updateUser = async (currentUser) => {
     dispatch({ type: UPDATE_USER_BEGIN });
     try {
@@ -125,10 +134,20 @@ const UserProvider = ({ children }) => {
     clearAlert();
   };
 
-  const getUserFavorites = async (id) => {
-    console.log(id);
+  // const getUserFavorites = async (id) => {
+  //   console.log(id);
+  //   try {
+  //     const { data } = await authFetch.get("/auth/favorites", id);
+  //     const { formattedRecipes } = data;
+  //     dispatch({ type: GET_USER_FAVORITES, payload: { formattedRecipes } });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const getUserFavorites = async (userId) => {
     try {
-      const { data } = await authFetch.get("/auth/favorites", id);
+      const { data } = await authFetch.patch("/auth/getFavorites", userId);
       const { formattedRecipes } = data;
       dispatch({ type: GET_USER_FAVORITES, payload: { formattedRecipes } });
     } catch (error) {
@@ -140,16 +159,16 @@ const UserProvider = ({ children }) => {
     console.log(current);
     try {
       const { data } = await authFetch.patch("/auth/updateFavorites", current);
-      const { formattedRecipes, currentUser } = data;
+      const { formattedRecipes, user, token } = data;
       dispatch({
         type: ADD_TO_USER_FAVORITES,
-        payload: { formattedRecipes, currentUser },
+        payload: { formattedRecipes, user, token },
       });
+      addUserToLocalStorage({ formattedRecipes, user, token });
     } catch (error) {
       console.log(error);
     }
   };
-  const logoutUser = () => {};
 
   return (
     <UserContext.Provider
@@ -161,6 +180,7 @@ const UserProvider = ({ children }) => {
         updateUser,
         getUserFavorites,
         addToFavorites,
+        logOutUser,
       }}
     >
       {children}
@@ -168,4 +188,4 @@ const UserProvider = ({ children }) => {
   );
 };
 
-export { UserProvider, UserContext };
+export { UserProvider, initialState, UserContext };

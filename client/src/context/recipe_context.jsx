@@ -4,11 +4,9 @@ import axios from "axios";
 import { UserContext } from "./user_context";
 
 import {
-  // FAVORITE_RECIPE,
   SEARCH_RECIPES_BEGIN,
   SEARCH_RECIPES_SUCCESS,
   SEARCH_RECIPES_ERROR,
-  // GET_FAVORITES_SUCCESS,
   GET_SINGLE_RECIPE_BEGIN,
   GET_SINGLE_RECIPE_SUCCESS,
   GET_SINGLE_RECIPE_ERROR,
@@ -20,31 +18,13 @@ import {
   GET_ALL_RECIPES_SUCCESS,
   GET_ALL_RECIPES_BEGIN,
   CHANGE_PAGE,
+  RESET_PAGE,
+  CHANGE_LIMIT,
 } from "../actions";
 
-// // turn data into an array
-// let recipeList = Object.values(data.recipes);
+const searchedRecipes = localStorage.getItem("searchedRecipes");
 
-// // in each recipe, add property of ID. Use index to create ID
-// // recipeList.map((item, index) => (item._id = nanoid())); cannot use nano(id) becasue provider rerenders and changes nanoid id everytime
-// // recipeList.map((item, index) => (item._id = index));
-
-// recipeList = recipeList.map((item, index) => {
-//   return { ...item, _id: index, favorite: false };
-// });
-
-// let shortRecipe = recipeList.slice(0, 3);
-
-// // const getLocalStorage = () => {
-// //   let recipe = localStorage.getItem("recipe");
-// //   if (recipe !== undefined) {
-// //     return JSON.parse(localStorage.getItem("recipe"));
-// //   } else {
-// //     return {};
-// //   }
-// // };
-
-const initialState = {
+export const initialState = {
   isEditing: false,
   title: "",
   yields: "",
@@ -53,26 +33,21 @@ const initialState = {
   instructions: "",
   recipes: [],
   allRecipes: [],
-  searchedRecipes: [],
-  defaultSearch: [],
-  favoriteList: [],
-  singleRecipeLoading: false,
-  singleRecipeError: false,
+  searchedRecipes: searchedRecipes ? JSON.parse(searchedRecipes) : [],
   singleRecipe: {},
-  // singleRecipe: getLocalStorage(),
-  isLoading: false,
+  isLoading: true,
   showAlert: false,
   alertType: "",
   alertText: "",
-  totalRecipes: 0,
   numOfPages: 1,
   page: 1,
+  limit: 12,
 };
 
 const RecipeContext = React.createContext();
 
 export const RecipeProvider = ({ children }) => {
-  const { token } = useContext(UserContext);
+  const { token, user } = useContext(UserContext);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // axios instance
@@ -91,10 +66,17 @@ export const RecipeProvider = ({ children }) => {
     }
   );
 
-  const getAllRecipes = async () => {
-    const { page } = state;
+  // When user changes, reset page
+  // useEffect(() => {
+  //   dispatch({ type: RESET_PAGE });
+  // }, [token]);
 
-    let url = `/recipes?page=${page}`;
+  // GET ALL RECIPES
+
+  const getAllRecipes = async () => {
+    const { page, limit } = state;
+
+    let url = `/recipes?page=${page}&limit=${limit}`;
 
     dispatch({ type: GET_ALL_RECIPES_BEGIN });
     try {
@@ -109,11 +91,17 @@ export const RecipeProvider = ({ children }) => {
     }
   };
 
+  // CHANGE RECIPE PAGE/LIMIT
+
   const changePage = (page) => {
     dispatch({ type: CHANGE_PAGE, payload: { page } });
   };
 
-  const searchRecipe = (ingredients) => {
+  const changeLimit = (limit) => {
+    dispatch({ type: CHANGE_LIMIT, payload: { limit } });
+  };
+
+  const searchRecipes = (ingredients) => {
     dispatch({ type: SEARCH_RECIPES_BEGIN });
     // DO WE NEED TRY AND CATCH? ****
     try {
@@ -123,30 +111,22 @@ export const RecipeProvider = ({ children }) => {
     }
   };
 
-  const getSingleRecipe = (id) => {
+  const getSingleRecipe = async (id) => {
     dispatch({ type: GET_SINGLE_RECIPE_BEGIN });
+
     try {
-      dispatch({ type: GET_SINGLE_RECIPE_SUCCESS, payload: id });
-    } catch {
-      dispatch({ type: GET_SINGLE_RECIPE_ERROR });
+      const response = await authFetch.get(`/recipes/${id}`);
+      const { recipe } = response.data;
+      dispatch({
+        type: GET_SINGLE_RECIPE_SUCCESS,
+        payload: { recipe },
+      });
+    } catch (error) {
+      console.log(error.response);
     }
   };
 
-  // const addToFavorite = (id) => {
-  //   dispatch({ type: FAVORITE_RECIPE, payload: id });
-  //   // dispatch({ type: GET_FAVORITES_SUCCESS });
-  // };
-
-  // const getFavorites = () => {
-  //   dispatch({ type: GET_FAVORITES_SUCCESS });
-  // };
-
-  // useEffect(() => {
-  //   if (state.singleRecipe !== undefined) {
-  //     localStorage.setItem("recipe", JSON.stringify(state.singleRecipe));
-  //   }
-  // }, [state.singleRecipe]);
-
+  // CREATE RECIPE FUNCTIONS
   const handleChange = ({ name, value }) => {
     dispatch({
       type: HANDLE_CHANGE,
@@ -180,19 +160,31 @@ export const RecipeProvider = ({ children }) => {
     }
   };
 
+  const addSearchToLocalStorage = (searchedRecipes) => {
+    localStorage.setItem("searchedRecipes", JSON.stringify(searchedRecipes));
+  };
+
+  const removeSearchFromLocalStorage = () => {
+    localStorage.removeItem("searchedRecipes");
+  };
+
+  useEffect(() => {
+    addSearchToLocalStorage(state.searchedRecipes);
+  }, [state.searchedRecipes]);
+
   return (
     <RecipeContext.Provider
       value={{
         ...state,
         getAllRecipes,
         changePage,
-        // addToFavorite,
-        searchRecipe,
+        searchRecipes,
         getSingleRecipe,
-        // getFavorites,
         handleChange,
         clearValues,
         createRecipe,
+        changeLimit,
+        removeSearchFromLocalStorage,
       }}
     >
       {children}

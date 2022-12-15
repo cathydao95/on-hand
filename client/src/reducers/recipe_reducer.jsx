@@ -1,7 +1,7 @@
 import {
   SEARCH_RECIPES_BEGIN,
   SEARCH_RECIPES_SUCCESS,
-  SEARCH_RECIPES_ERROR,
+  // SEARCH_RECIPES_ERROR,
   GET_SINGLE_RECIPE_BEGIN,
   GET_SINGLE_RECIPE_SUCCESS,
   GET_SINGLE_RECIPE_ERROR,
@@ -104,21 +104,6 @@ const recipe_reducer = (state, action) => {
     return { ...state, isLoading: false, singleRecipe: action.payload.recipe };
   }
 
-  // if (action.type === GET_SINGLE_RECIPE_SUCCESS) {
-  //   const { allRecipes } = state;
-  //   console.log("pay", action.payload);
-
-  //   console.log(allRecipes);
-
-  //   allRecipes.map((rec) => console.log("typeof", typeof rec._id));
-
-  //   let tempRecipe = allRecipes.find((rec) =>
-  //     console.log("lol", rec._id === action.payload, rec._id, action.payload)
-  //   );
-
-  //   return { ...state, isLoading: false, singleRecipe: tempRecipe };
-  // }
-
   if (action.type === GET_SINGLE_RECIPE_ERROR) {
     return { ...state };
   }
@@ -147,33 +132,18 @@ const recipe_reducer = (state, action) => {
   }
 
   if (action.type === CREATE_RECIPE_BEGIN) {
-    console.log("1", state);
-    let test1 = state.ingredients.split(", ");
-    console.log(test1);
-    return {
-      ...state,
-      isLoading: true,
-      ingredients: test1,
-    };
+    return { isLoading: true, ...state };
   }
 
   if (action.type === CREATE_RECIPE_SUCCESS) {
-    console.log("2", state);
     return {
       ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "success",
-      alertText: "New Recipe Created!",
+      allRecipes: action.payload.allRecipes,
     };
   }
   if (action.type === CREATE_RECIPE_ERROR) {
     return {
       ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: action.payload.msg,
     };
   }
 

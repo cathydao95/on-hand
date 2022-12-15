@@ -10,23 +10,13 @@ import {
   GET_USER_FAVORITES,
   ADD_TO_USER_FAVORITES,
   LOGOUT_USER,
+  GET_PERSONAL_BEGIN,
+  GET_PERSONAL_SUCCESS,
 } from "../actions";
 
 import { initialState } from "../context/user_context";
 
 const reducer = (state, action) => {
-  // if (action.type === GET_USER_FAVORITES) {
-  //   return {
-  //     ...state,
-  //     favorites: action.payload.formattedRecipes,
-  //   };
-  if (action.type === GET_USER_FAVORITES) {
-    // let tempFavorites = recipes.map((rec) => user.favorites.inludes(rec._id));
-
-    // console.log(tempFavorites);
-    return { ...state, favorites: action.payload.formattedRecipes };
-  }
-
   if (action.type === DISPLAY_ALERT) {
     return {
       ...state,
@@ -104,6 +94,31 @@ const reducer = (state, action) => {
 
   if (action.type === LOGOUT_USER) {
     return { ...initialState, user: null, token: null };
+  }
+
+  if (action.type === GET_PERSONAL_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === GET_PERSONAL_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload.user,
+      personalRecipes: action.payload.createdByUser,
+    };
+  }
+
+  // if (action.type === GET_USER_FAVORITES) {
+  //   return {
+  //     ...state,
+  //     favorites: action.payload.formattedRecipes,
+  //   };
+  if (action.type === GET_USER_FAVORITES) {
+    // let tempFavorites = recipes.map((rec) => user.favorites.inludes(rec._id));
+
+    // console.log(tempFavorites);
+    return { ...state, favorites: action.payload.formattedRecipes };
   }
   throw new Error(`no such action : ${action.type}`);
 };

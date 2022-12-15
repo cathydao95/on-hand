@@ -3,6 +3,7 @@ import Recipe from "../models/Recipes.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
 import mongoose from "mongoose";
+import Recipes from "../models/Recipes.js";
 
 const register = async (req, res) => {
   const { name, lastName, email, password } = req.body;
@@ -154,54 +155,67 @@ const updateFavorites = async (req, res) => {
   }
 };
 
-const getUserFavorites = async (req, res) => {
+// const getUserFavorites = async (req, res) => {
+//   try {
+//     const { userId } = req.body;
+//     const user = await User.findById(userId);
+
+//     const favorites = await Promise.all(
+//       user.favorites.map((id) => Recipe.findById(id))
+//     );
+
+//     const formattedRecipes = favorites.map(
+//       ({
+//         _id,
+//         title,
+//         image,
+//         link,
+//         nutrients,
+//         yields,
+//         time,
+//         ingredients,
+//         instructions,
+//       }) => {
+//         return {
+//           _id,
+//           title,
+//           image,
+//           link,
+//           nutrients,
+//           yields,
+//           time,
+//           ingredients,
+//           instructions,
+//         };
+//       }
+//     );
+//     res.status(StatusCodes.OK).json({ formattedRecipes });
+//     // res.status(StatusCodes.OK).json({ user, favorites });
+//   } catch (error) {
+//     res.status(StatusCodes.BAD_REQUEST).json({ msg: error });
+//   }
+// };
+
+const getCreatedRecipes = async (req, res) => {
   try {
-    const { userId } = req.body;
-    const user = await User.findById(userId);
+    const { id } = req.params;
+    const user = await User.findById(id);
 
-    const favorites = await Promise.all(
-      user.favorites.map((id) => Recipe.findById(id))
-    );
+    const createdByUser = await Recipe.find({ createdBy: id });
+    user.personalRecipes = createdByUser;
 
-    const formattedRecipes = favorites.map(
-      ({
-        _id,
-        title,
-        image,
-        link,
-        nutrients,
-        yields,
-        time,
-        ingredients,
-        instructions,
-      }) => {
-        return {
-          _id,
-          title,
-          image,
-          link,
-          nutrients,
-          yields,
-          time,
-          ingredients,
-          instructions,
-        };
-      }
-    );
-    res.status(StatusCodes.OK).json({ formattedRecipes });
-    // res.status(StatusCodes.OK).json({ user, favorites });
+    res.status(StatusCodes.OK).json({ user, createdByUser });
   } catch (error) {
-    res.status(StatusCodes.BAD_REQUEST).json({ msg: error });
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "didnt work" });
   }
 };
-
-const createRecipe = async () => {};
 
 export {
   register,
   login,
   updateUser,
   updateFavorites,
-  createRecipe,
-  getUserFavorites,
+  // createRecipe,
+  // getUserFavorites,
+  getCreatedRecipes,
 };

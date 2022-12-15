@@ -8,17 +8,17 @@ const RecipesSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    //   default:
-    //     "https://www.allrecipes.com/thmb/j3loP2uIKWVrpap0rTXd2Wj4po4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/4518035-7dfbe359b0e1404eac6a329c45def148.jpg",
+    default:
+      "https://www.allrecipes.com/thmb/j3loP2uIKWVrpap0rTXd2Wj4po4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/4518035-7dfbe359b0e1404eac6a329c45def148.jpg",
   },
   link: {
     type: String,
-    // default:
-    //   "https://www.allrecipes.com/recipe/263394/garlic-shrimp-pasta-bake/",
+    default:
+      "https://www.allrecipes.com/recipe/263394/garlic-shrimp-pasta-bake/",
   },
   nutrients: {
     type: Object,
-    //default: "Not Available",
+    default: "Not Available",
   },
   yields: {
     type: String,

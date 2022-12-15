@@ -2,6 +2,7 @@ import Recipes from "../models/Recipes.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
 import mongoose from "mongoose";
+import User from "../models/User.js";
 
 const createRecipe = async (req, res) => {
   const { title, yields, time, ingredients, instructions } = req.body;
@@ -12,8 +13,13 @@ const createRecipe = async (req, res) => {
 
   req.body.createdBy = req.user.userId;
 
+  let user = await User.findById(req.user.userId);
+
   const recipe = await Recipes.create(req.body);
-  res.status(StatusCodes.CREATED).json({ recipe });
+  user.personalRecipes.push(recipe._id);
+  await user.save();
+  const allRecipes = await Recipes.find({});
+  res.status(StatusCodes.CREATED).json({ user });
 };
 
 const deleteRecipe = async (req, res) => {

@@ -1,91 +1,103 @@
 .navContainer {
   display: flex;
-  justify-content: space-evenly;
-}
-
-.navCenter {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.toggleBtn {
-  background: transparent;
-  border-color: transparent;
-  font-size: 1.75rem;
-  color: var(--blue);
-  cursor: pointer;
-  display: flex;
+  justify-content: space-between;
   align-items: center;
+  background-color: var(--blue);
+  color: var(--white);
+  padding: 1.5rem 0;
 }
 
-.navLinks {
-  flex-basis: 50%;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
+.title {
+  font-size: 2rem;
+  padding: 0 0 0 2rem;
 }
 
 .accountContainer {
-  flex-basis: 40%;
-}
-.logOutContainer {
   position: relative;
+  display: inline-block;
 }
+
 .accountBtn {
   display: flex;
-  align-items: center;
+  width: 120px;
   justify-content: center;
   gap: 0.5rem;
-  position: relative;
   background-color: var(--blue);
   color: var(--white);
   border: transparent;
-
-  font-size: 1rem;
-  padding: 10px 15px;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  border: none;
 }
 
-.dropDown {
-  visibility: hidden;
-}
-
-.showDropDown {
-  visibility: visible;
+.dropDownContent {
+  font-size: 1.25rem;
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
   text-align: center;
-  background-color: var(--blue);
-  justify-content: space-evenly;
-  text-align: center;
-  background-color: var(--blue);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
 }
 
+.settingsBtn,
 .btn {
-  text-align: center;
-  width: 100%;
-  color: var(--black);
-  background-color: var(--blue);
-  border: transparent;
-  font-size: 1rem;
   text-transform: capitalize;
-  padding: 5px 0px 15px 0px;
-}
-
-.settingsBtn {
-  text-align: center;
-  text-decoration: none;
-  color: var(--black);
-  background-color: var(--blue);
   margin: 0;
+  border: none;
   font-size: 1rem;
-  padding: 15px 0px 5px 0px;
+  color: black;
+  width: 100%;
+  padding: 13px 15px;
+  text-decoration: none;
+  display: block;
 }
 
-.showDropDown:hover,
-.btn:hover,
-.settingsBtn:hover {
-  background-color: rgb(151, 224, 241);
+/* Change color of dropdown links on hover */
+.settingsBtn:hover,
+.btn:hover {
+  background-color: #ddd;
 }
+
+/* Show the dropdown menu on hover */
+.accountContainer:hover .dropDownContent {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.accountContainer:hover .accountBtn {
+  background-color: #549ce0;
+}
+
+// bigger screen
+// .navCenter {
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-evenly;
+// }
+
+// .navLinks {
+//   flex-basis: 50%;
+//   display: flex;
+//   justify-content: center;
+//   gap: 1rem;
+// }
+
+// .linkActive {
+//   padding-bottom: 5px;
+//   border-bottom: 4px solid #00b4bf;
+//   text-decoration: none;
+//   color: black;
+// }
+
+// .link {
+//   text-decoration: none;
+//   color: black;
+// }
+
+// @media (min-width: 500px) {
+//   .navContainer {
+//     display: none;
+//   }
+// }

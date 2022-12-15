@@ -56,13 +56,13 @@ const IconRoutes = () => {
             </div>
           </NavLink>
           <NavLink
-            to="/create"
+            to="/myrecipes"
             className={({ isActive }) =>
               isActive ? styles.linkActive : styles.link
             }
           >
             <div className={styles.linkContainer}>
-              <AiOutlinePlus /> <span>Create</span>
+              <AiOutlinePlus /> <span>Recipes</span>
             </div>
           </NavLink>
           {/* <NavLink

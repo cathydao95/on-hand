@@ -1,0 +1,62 @@
+.title {
+  padding: 25px;
+}
+.formControl {
+  display: flex;
+  justify-content: center;
+
+  background-color: white;
+}
+
+// Search Bar
+
+.searchIcon {
+  flex-basis: 10%;
+}
+.searchInput {
+  flex-basis: 90%;
+  height: 2rem;
+  text-align: left;
+  border: 1px solid #00b4bf;
+  padding-left: 10px;
+
+  outline: none;
+}
+
+.searchBtn {
+  flex-basis: 10%;
+  background-color: #00b4bf;
+  color: white;
+  border: none;
+}
+
+// Recipe Containers
+.recipesContainer {
+  padding: 30px 0px 20px 0px;
+}
+.singleRecipeContainer {
+  padding: 10px 0px;
+}
+
+@media (min-width: 600px) {
+  .recipesContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .singleRecipeContainer {
+    padding: 10px;
+  }
+}
+
+@media (min-width: 900px) {
+  .recipesContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .recipesContainer {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -1,14 +1,3 @@
-.pageWrapper {
-  padding: 40px 30px;
-}
-
-// .textContainer {
-//   display: flex;
-//   justify-content: space-between;
-//   padding: 20px 0px;
-//   align-items: center;
-// }
-
 .allBtn {
   background-color: white;
   border: none;
@@ -29,11 +18,11 @@
   color: #00b4bf;
 }
 .noFavs {
-  height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 .textContainer {

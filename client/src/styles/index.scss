@@ -36,6 +36,7 @@ body {
   color: var(--text);
   font-size: 1rem;
   font-family: var(--body);
+  margin: 0;
 }
 
 p {
@@ -191,4 +192,8 @@ ul {
 }
 .full-page {
   min-height: 100vh;
+}
+
+.pageWrapper {
+  padding: 20px 20px 200px 20px;
 }

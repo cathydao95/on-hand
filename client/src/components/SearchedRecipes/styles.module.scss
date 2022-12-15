@@ -1,0 +1,22 @@
+.searchResultContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 10px;
+}
+.noRecipes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.noRecipes p {
+  font-size: 1rem;
+}
+
+.sadIcon {
+  font-size: 7rem;
+  color: var(--blue);
+}

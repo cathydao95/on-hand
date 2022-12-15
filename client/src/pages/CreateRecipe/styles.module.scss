@@ -1,5 +1,5 @@
 .pageWrapper {
-  height: 600px;
+  height: 780px;
   padding: 20px;
 }
 
@@ -24,11 +24,13 @@
   margin-bottom: 1rem;
 }
 
-.addBtn {
-  background-color: white;
-  width: 60%;
-  height: 30px;
-  border: none;
+.btnContainer {
+  padding: 20px 0px;
   width: 100%;
-  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 45%;
 }

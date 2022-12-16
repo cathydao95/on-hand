@@ -1,8 +1,13 @@
 import Recipes from "../models/Recipes.js";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthenticatedError,
+} from "../errors/index.js";
 import mongoose from "mongoose";
 import User from "../models/User.js";
+import checkPermissions from "../utils/checkPermissions.js";
 
 const createRecipe = async (req, res) => {
   const { title, yields, time, ingredients, instructions } = req.body;
@@ -14,16 +19,12 @@ const createRecipe = async (req, res) => {
   req.body.createdBy = req.user.userId;
 
   let user = await User.findById(req.user.userId);
-
+  // is it ok to change user info in recipes controller???
   const recipe = await Recipes.create(req.body);
   user.personalRecipes.push(recipe._id);
   await user.save();
   const allRecipes = await Recipes.find({});
-  res.status(StatusCodes.CREATED).json({ user });
-};
-
-const deleteRecipe = async (req, res) => {
-  res.send("delete recipe");
+  res.status(StatusCodes.CREATED).json({ allRecipes });
 };
 
 const getAllRecipes = async (req, res) => {
@@ -69,7 +70,51 @@ const getSingleRecipe = async (req, res) => {
 };
 
 const updateRecipe = async (req, res) => {
-  res.send("update recipe");
+  const { id: recipeId } = req.params;
+
+  const { title, yields, time, ingredients, instructions } = req.body;
+
+  if (!title || !yields || !time || !ingredients || !instructions) {
+    throw new BadRequestError("Please provide all values");
+  }
+  const recipe = await Recipes.findOne({ _id: recipeId });
+
+  if (!recipe) {
+    throw new NotFoundError(`no recipe with id: ${recipeId}`);
+  }
+  // add function to throw if no recie found
+  checkPermissions(req.user, recipe.createdBy);
+
+  const updatedRecipe = await Recipes.findOneAndUpdate(
+    { _id: recipeId },
+    req.body,
+    { new: true, runValidators: true }
+  );
+
+  res.status(StatusCodes.OK).json({ updatedRecipe });
+};
+
+const deleteRecipe = async (req, res) => {
+  const { id: recipeId } = req.params;
+
+  const recipe = await Recipes.findOne({ _id: recipeId });
+
+  if (!recipe) {
+    throw new NotFoundError(`no recipe with id: ${recipeId}`);
+  }
+
+  checkPermissions(req.user, recipe.createdBy);
+
+  await recipe.remove();
+
+  let user = await User.findById(req.user.userId);
+
+  user.personalRecipes = user.personalRecipes.filter(
+    (id) => id.toString() !== recipeId
+  );
+  await user.save();
+
+  res.status(StatusCodes.OK).json({ msg: "recipe removed", user });
 };
 
 const getSearchedRecipes = async (req, res) => {

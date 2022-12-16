@@ -196,13 +196,12 @@ const updateFavorites = async (req, res) => {
 //   }
 // };
 
-const getCreatedRecipes = async (req, res) => {
+const getPersonalRecipes = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
 
     const createdByUser = await Recipe.find({ createdBy: id });
-    user.personalRecipes = createdByUser;
 
     res.status(StatusCodes.OK).json({ user, createdByUser });
   } catch (error) {
@@ -217,5 +216,5 @@ export {
   updateFavorites,
   // createRecipe,
   // getUserFavorites,
-  getCreatedRecipes,
+  getPersonalRecipes,
 };

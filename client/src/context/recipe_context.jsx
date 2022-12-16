@@ -9,7 +9,7 @@ import {
   SEARCH_RECIPES_ERROR,
   GET_SINGLE_RECIPE_BEGIN,
   GET_SINGLE_RECIPE_SUCCESS,
-  GET_SINGLE_RECIPE_ERROR,
+  // GET_SINGLE_RECIPE_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
   CREATE_RECIPE_BEGIN,
@@ -18,7 +18,7 @@ import {
   GET_ALL_RECIPES_SUCCESS,
   GET_ALL_RECIPES_BEGIN,
   CHANGE_PAGE,
-  RESET_PAGE,
+  // RESET_PAGE,
   CHANGE_LIMIT,
 } from "../actions";
 
@@ -47,7 +47,7 @@ export const initialState = {
 const RecipeContext = React.createContext();
 
 export const RecipeProvider = ({ children }) => {
-  const { token, user } = useContext(UserContext);
+  const { token } = useContext(UserContext);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // axios instance
@@ -141,15 +141,19 @@ export const RecipeProvider = ({ children }) => {
   const createRecipe = async () => {
     dispatch({ type: CREATE_RECIPE_BEGIN });
     try {
-      const { title, yields, time, ingredients, instructions } = state;
-      await authFetch.post("/recipes", {
+      let { title, yields, time, ingredients, instructions } = state;
+      ingredients = ingredients.split(", ");
+      instructions = instructions.split(". ");
+      const response = await authFetch.post("/recipes", {
         title,
         yields,
         time,
         ingredients,
         instructions,
       });
-      dispatch({ type: CREATE_RECIPE_SUCCESS });
+      const { allRecipes } = response.data;
+
+      dispatch({ type: CREATE_RECIPE_SUCCESS, payload: { allRecipes } });
       dispatch({ type: CLEAR_VALUES });
     } catch (error) {
       if (error.response.status === 401) return;

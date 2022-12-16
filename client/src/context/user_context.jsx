@@ -11,9 +11,11 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
-  GET_USER_FAVORITES,
+  // GET_USER_FAVORITES,
   ADD_TO_USER_FAVORITES,
   LOGOUT_USER,
+  GET_PERSONAL_BEGIN,
+  GET_PERSONAL_SUCCESS,
 } from "../actions";
 
 // CHANGE CONTEXT IMPORTS TO MAKE MATCH
@@ -30,6 +32,7 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   favorites: favorites ? JSON.parse(favorites) : [],
+  personalRecipes: [],
 };
 
 const UserContext = React.createContext();
@@ -134,26 +137,15 @@ const UserProvider = ({ children }) => {
     clearAlert();
   };
 
-  // const getUserFavorites = async (id) => {
-  //   console.log(id);
+  // const getUserFavorites = async (userId) => {
   //   try {
-  //     const { data } = await authFetch.get("/auth/favorites", id);
+  //     const { data } = await authFetch.patch("/auth/getFavorites", userId);
   //     const { formattedRecipes } = data;
   //     dispatch({ type: GET_USER_FAVORITES, payload: { formattedRecipes } });
   //   } catch (error) {
   //     console.log(error);
   //   }
   // };
-
-  const getUserFavorites = async (userId) => {
-    try {
-      const { data } = await authFetch.patch("/auth/getFavorites", userId);
-      const { formattedRecipes } = data;
-      dispatch({ type: GET_USER_FAVORITES, payload: { formattedRecipes } });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const addToFavorites = async (current) => {
     console.log(current);
@@ -170,6 +162,19 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const getPersonalRecipes = async (id) => {
+    dispatch({ type: GET_PERSONAL_BEGIN });
+    try {
+      const { data } = await authFetch.get(`/auth/${id}/recipes`);
+      const { user, createdByUser } = data;
+      dispatch({
+        type: GET_PERSONAL_SUCCESS,
+        payload: { user, createdByUser },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <UserContext.Provider
       value={{
@@ -178,9 +183,10 @@ const UserProvider = ({ children }) => {
         clearAlert,
         setupUser,
         updateUser,
-        getUserFavorites,
+        // getUserFavorites,
         addToFavorites,
         logOutUser,
+        getPersonalRecipes,
       }}
     >
       {children}

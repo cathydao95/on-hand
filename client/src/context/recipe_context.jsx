@@ -20,7 +20,15 @@ import {
   CHANGE_PAGE,
   // RESET_PAGE,
   CHANGE_LIMIT,
+  SET_EDIT_RECIPE,
+  UPDATE_RECIPE_BEGIN,
+  UPDATE_RECIPE_SUCCESS,
+  UPDATE_RECIPE_ERROR,
+  DELETE_RECIPE_BEGIN,
+  DELETE_RECIPE_SUCCESS,
+  DELETE_RECIPE_ERROR,
 } from "../actions";
+import { Navigate } from "react-router-dom";
 
 const searchedRecipes = localStorage.getItem("searchedRecipes");
 
@@ -35,6 +43,7 @@ export const initialState = {
   allRecipes: [],
   searchedRecipes: searchedRecipes ? JSON.parse(searchedRecipes) : [],
   singleRecipe: {},
+  editRecipeId: "",
   isLoading: true,
   showAlert: false,
   alertType: "",
@@ -176,6 +185,53 @@ export const RecipeProvider = ({ children }) => {
     addSearchToLocalStorage(state.searchedRecipes);
   }, [state.searchedRecipes]);
 
+  const setEditRecipe = (id) => {
+    dispatch({ type: SET_EDIT_RECIPE, payload: { id } });
+  };
+
+  // UPDATE RECIPE
+  const updateRecipe = async () => {
+    dispatch({ type: UPDATE_RECIPE_BEGIN });
+    try {
+      let { title, yields, time, ingredients, instructions } = state;
+      ingredients = ingredients.split(", ");
+      instructions = instructions.split(". ");
+      await authFetch.patch(`/recipes/${state.editRecipeId}`, {
+        title,
+        yields,
+        time,
+        ingredients,
+        instructions,
+      });
+
+      dispatch({ type: UPDATE_RECIPE_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      console.log(error);
+      if (error.response.status === 401) return;
+      dispatch({
+        type: UPDATE_RECIPE_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  };
+
+  const deleteRecipe = async (id) => {
+    dispatch({ type: DELETE_RECIPE_BEGIN });
+    try {
+      await authFetch.delete(`/recipes/${id}`);
+      getAllRecipes();
+      // is there a better wy to reload
+      window.location.reload();
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: DELETE_RECIPE_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  };
+
   return (
     <RecipeContext.Provider
       value={{
@@ -189,6 +245,9 @@ export const RecipeProvider = ({ children }) => {
         createRecipe,
         changeLimit,
         removeSearchFromLocalStorage,
+        setEditRecipe,
+        updateRecipe,
+        deleteRecipe,
       }}
     >
       {children}

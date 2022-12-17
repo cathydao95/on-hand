@@ -15,6 +15,13 @@ import {
   CHANGE_PAGE,
   RESET_PAGE,
   CHANGE_LIMIT,
+  SET_EDIT_RECIPE,
+  UPDATE_RECIPE_BEGIN,
+  UPDATE_RECIPE_SUCCESS,
+  UPDATE_RECIPE_ERROR,
+  DELETE_RECIPE_BEGIN,
+  DELETE_RECIPE_SUCCESS,
+  DELETE_RECIPE_ERROR,
 } from "../actions";
 import { initialState } from "../context/recipe_context";
 
@@ -149,6 +156,68 @@ const recipe_reducer = (state, action) => {
 
   if (action.type === RESET_PAGE) {
     return { ...initialState };
+  }
+
+  if (action.type === UPDATE_RECIPE_BEGIN) {
+    return { ...state, isEditing: true, isLoading: true };
+  }
+
+  if (action.type === UPDATE_RECIPE_SUCCESS) {
+    return {
+      ...state,
+      isEditing: false,
+      isLoading: false,
+      alertType: "success",
+      alertText: "Success. Recipe updated",
+    };
+  }
+
+  if (action.type === UPDATE_RECIPE_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isEditing: false,
+      alertType: "danger",
+      alertText: "Error. Recipe not updated",
+    };
+  }
+
+  if (action.type === SET_EDIT_RECIPE) {
+    const recipe = state.allRecipes.find(
+      (recipe) => recipe._id === action.payload.id
+    );
+    let { _id, title, yields, time, ingredients, instructions } = recipe;
+
+    return {
+      ...state,
+      isEditing: true,
+      editRecipeId: _id,
+      title,
+      yields,
+      time,
+      ingredients,
+      instructions,
+    };
+  }
+
+  if (action.type === DELETE_RECIPE_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: true,
+      alertType: "success",
+      alertText: "recipe deleted",
+    };
+  }
+
+  if (action.type === DELETE_RECIPE_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
   }
 };
 

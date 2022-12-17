@@ -27,7 +27,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.0",
     "morgan": "^1.10.0",
-    "react-router-scroll-to-top": "^1.2.0",
+    "util": "^0.12.5",
     "validator": "^13.7.0"
   }
 }

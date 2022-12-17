@@ -15,6 +15,7 @@ import recipesRouter from "./routes/recipesRoutes.js";
 // middleware
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 import notFoundMiddleware from "./middleware/not-found.js";
+import authenticate from "./middleware/authenticate.js";
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -26,8 +27,8 @@ app.get("/api/v1", (req, res) => {
   res.json({ msg: "Welcome!" });
 });
 
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/recipes", recipesRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/recipes", authenticate, recipesRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

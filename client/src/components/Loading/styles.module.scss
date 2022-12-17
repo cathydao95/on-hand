@@ -1,3 +1,10 @@
+.loadingWrapper {
+  height: 80vh;
+
+  display: flex;
+  align-items: center;
+}
+
 .loading {
   width: 10rem;
   height: 10rem;
@@ -11,5 +18,12 @@
 @keyframes spinner {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 800px) {
+  .loading {
+    width: 20rem;
+    height: 20rem;
   }
 }

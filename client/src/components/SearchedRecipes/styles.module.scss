@@ -20,3 +20,33 @@
   font-size: 7rem;
   color: var(--blue);
 }
+
+@media (min-width: 600px) {
+  .searchResultContainer {
+    padding-top: 50px;
+  }
+  .noRecipes {
+    gap: 25px;
+  }
+
+  .noRecipes p {
+    font-size: 1rem;
+  }
+
+  .sadIcon {
+    font-size: 8rem;
+  }
+}
+
+@media (min-width: 600px) {
+  .searchResultContainer {
+    padding-top: 80px;
+  }
+  .noRecipes {
+    gap: 25px;
+  }
+
+  .sadIcon {
+    font-size: 10rem;
+  }
+}

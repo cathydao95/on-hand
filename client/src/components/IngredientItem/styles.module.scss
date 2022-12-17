@@ -1,10 +1,8 @@
 .ingBtnContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  // flex-wrap: wrap;
+
   gap: 0.25rem;
-  // justify-content: center;
-  // align-items: center;
 }
 
 .activeBtn {
@@ -19,4 +17,25 @@
 .ingredientText {
   text-transform: capitalize;
   padding-left: 5px;
+}
+
+@media (min-width: 500px) {
+  .ingBtnContainer {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .ingBtnContainer {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.3rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .ingBtnContainer {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+  }
 }

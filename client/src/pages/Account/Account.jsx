@@ -8,7 +8,7 @@ import Alert from "../../components/Alert/Alert";
 //  REFACTOR FORM ROWS INTO A NEW COMPONENT FOR RECIPE AND REGISTER
 
 const Account = () => {
-  const { user, showAlert, displayAlert, updateUser, isLoading } =
+  const { user, logOutUser, showAlert, displayAlert, updateUser, isLoading } =
     useContext(UserContext);
   const [name, setName] = useState(user?.name);
   const [lastName, setLastName] = useState(user?.lastName);
@@ -53,6 +53,9 @@ const Account = () => {
           {isLoading ? "Loading..." : "Save Changes"}
         </button>
       </form>
+      <button type="button" className="btn" onClick={logOutUser}>
+        logout
+      </button>
     </div>
   );
 };

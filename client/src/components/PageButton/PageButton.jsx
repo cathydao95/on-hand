@@ -32,7 +32,6 @@ const PageButton = () => {
     changePage(selectPage);
   };
 
-  console.log(selectPage);
   return (
     <div className={styles.containerWrapper}>
       <button className={styles.prevBtn} onClick={prevPage}>

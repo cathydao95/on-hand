@@ -25,7 +25,7 @@ const Navbar = () => {
           Dashboard
         </NavLink>
         <NavLink
-          to="/recipes"
+          to="/search"
           className={({ isActive }) =>
             isActive ? styles.linkActive : styles.link
           }

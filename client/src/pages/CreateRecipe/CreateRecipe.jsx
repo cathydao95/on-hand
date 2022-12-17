@@ -1,14 +1,16 @@
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import RecipeContext from "../../context/recipe_context";
 import { UserContext } from "../../context/user_context";
 import FormRow from "../../components/FormRow/FormRow";
 import Alert from "../../components/Alert/Alert";
+import { useNavigate } from "react-router-dom";
 
 //  REFACTOR FORM ROWS INTO A NEW COMPONENT FOR RECIPE AND REGISTER
 
 const CreateRecipe = () => {
+  const navigate = useNavigate();
   const {
     isEditing,
     title,
@@ -19,6 +21,8 @@ const CreateRecipe = () => {
     handleChange,
     clearValues,
     createRecipe,
+    updateRecipe,
+    deleteRecipe,
   } = useContext(RecipeContext);
 
   const { displayAlert } = useContext(UserContext);
@@ -34,13 +38,20 @@ const CreateRecipe = () => {
 
     if (!title || !yields || !time || !ingredients || !instructions) {
       displayAlert();
+
       return;
     }
 
     if (isEditing) {
+      updateRecipe();
+
+      navigate("/myrecipes");
+
       return;
     }
+
     createRecipe();
+    navigate("/myrecipes");
   };
 
   return (
@@ -86,8 +97,9 @@ const CreateRecipe = () => {
             onClick={onSubmit}
             className={clsx(styles.btn, "btn")}
           >
-            Save My Recipe
+            {isEditing ? "Update Recipe" : "Save Recipe"}
           </button>
+
           <button
             onClick={(e) => {
               e.preventDefault();

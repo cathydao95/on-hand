@@ -137,6 +137,7 @@ let list = [
       "chick peas",
       "tomato sauce",
       "lentils",
+      "seaweed",
     ],
   },
 ];

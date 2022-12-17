@@ -7,6 +7,7 @@ import RecipeContext from "../../context/recipe_context";
 import IngredientList from "../../components/IngredientList/IngredientList";
 import Loading from "../../components/Loading/Loading";
 import SearchedRecipes from "../../components/SearchedRecipes/SearchedRecipes";
+import Navbar from "../../components/Navbar/Navbar";
 
 const Search = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -56,75 +57,76 @@ const Search = () => {
     }
   }, []);
 
-  console.log(showSearch);
-
   // useEffect(() => {
   //   setIngredients(userInput);
   // }, [userInput]);
-
-  console.log(ingredients);
 
   if (isLoading) {
     return <Loading />;
   }
 
   return (
-    <div className={clsx(styles.pageWrapper, "pageWrapper")}>
-      <div className={clsx(styles.title, "title")}>
-        <h3>Let's get cooking!</h3>
-        <p> What ingredients do you have on hand?</p>
-      </div>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <div className={styles.formControl}>
-          {/* remove for now until can implment but text and search function */}
+    <div>
+      <Navbar />
+      <div className={clsx(styles.pageWrapper, "pageWrapper")}>
+        <div className={clsx(styles.title, "title")}>
+          <h3>Let's get cooking!</h3>
+          <p> What ingredients do you have on hand?</p>
+        </div>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div className={styles.formControl}>
+            {/* remove for now until can implment but text and search function */}
 
-          {/* <input
+            {/* <input
               className={styles.searchInput}
               type="text"
               placeholder="Type your ingredients, separated by commas"
               onChange={(e) => handleChange(e)}
               value={userInput}
             /> */}
-          {!showSearch && searchedRecipes.length < 1 && (
+            {!showSearch && searchedRecipes.length < 1 && (
+              <button
+                disabled={ingredients.length < 1}
+                className={styles.searchBtn}
+                type="submit"
+              >
+                <span>Search for Recipes</span>
+                <AiOutlineSearch className={styles.searchIcon} />
+              </button>
+            )}
+
+            {!showSearch ? (
+              <div>
+                <IngredientList
+                  setIngredients={setIngredients}
+                  ingredients={ingredients}
+                />
+              </div>
+            ) : (
+              <div className={styles.searchResults}>
+                <SearchedRecipes />
+              </div>
+            )}
+          </div>
+        </form>
+        <div className={styles.btnContainer}>
+          {searchedRecipes.length > 0 ? (
             <button
-              disabled={ingredients.length < 1}
-              className={styles.searchBtn}
-              type="submit"
+              onClick={() => clearSearchResults()}
+              className={clsx(styles.clearBtn, "btn")}
             >
-              <span>Search for Recipes</span>
-              <AiOutlineSearch className={styles.searchIcon} />
+              Clear Search
+            </button>
+          ) : (
+            <button
+              onClick={() => clearInput()}
+              className={clsx(styles.clearBtn, "btn")}
+            >
+              {!showSearch ? "Clear All Values" : "Restart Search"}
             </button>
           )}
-
-          {!showSearch ? (
-            <div>
-              <IngredientList
-                setIngredients={setIngredients}
-                ingredients={ingredients}
-              />
-            </div>
-          ) : (
-            <div className={styles.searchResults}>
-              <SearchedRecipes />
-            </div>
-          )}
         </div>
-      </form>
-      {searchedRecipes.length > 0 ? (
-        <button
-          onClick={() => clearSearchResults()}
-          className={clsx(styles.clearBtn, "btn")}
-        >
-          Clear Search
-        </button>
-      ) : (
-        <button
-          onClick={() => clearInput()}
-          className={clsx(styles.clearBtn, "btn")}
-        >
-          {!showSearch ? "Clear All Values" : "Restart Search"}
-        </button>
-      )}
+      </div>
     </div>
   );
 };

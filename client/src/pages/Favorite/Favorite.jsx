@@ -1,23 +1,15 @@
 import styles from "./styles.module.scss";
-import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
-import FavoritedRecipe from "../../components/FavoritedRecipe/FavoritedRecipe";
-import RecipeContext from "../../context/recipe_context";
-import { IoHeartCircleSharp } from "react-icons/io5";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { IoHeartCircleSharp } from "react-icons/io5";
 import { UserContext } from "../../context/user_context";
+import SingleRecipe from "../../components/SingleRecipe/SingleRecipe";
 
 const Favorite = () => {
-  const { getUserFavorites, user, token, favorites } = useContext(UserContext);
+  const { favorites } = useContext(UserContext);
 
-  // ISNT WORKING TO FETCH FAVORITES.. BUT DO WE NEED?
-  // let userId = user._id;
-
-  // useEffect(() => {
-  //   getUserFavorites(userId);
-  // }, []);
-
-  // if use favorites.. doesnt work until click faovirtes button.. need to figure out how to render info on load
+  // Ended up getting favorites on user login.. why doesn't get work here?
 
   const [expand, setExpand] = useState(false);
 
@@ -26,9 +18,9 @@ const Favorite = () => {
   };
 
   return (
-    <div>
+    <div className="pageWrapper">
       {favorites && favorites.length ? (
-        <div className={styles.pageWrapper}>
+        <div>
           <div className={styles.textContainer}>
             <h1 className={styles.title}>My Favorites</h1>
             {favorites && favorites.length > 4 && !expand && (
@@ -40,10 +32,10 @@ const Favorite = () => {
           <div className={styles.favoritesContainer}>
             {expand
               ? favorites.map((ele, index) => {
-                  return <FavoritedRecipe key={index} {...ele} />;
+                  return <SingleRecipe key={index} {...ele} />;
                 })
               : favorites.slice(0, 4).map((ele, index) => {
-                  return <FavoritedRecipe key={index} {...ele} />;
+                  return <SingleRecipe key={index} {...ele} />;
                 })}
           </div>
         </div>

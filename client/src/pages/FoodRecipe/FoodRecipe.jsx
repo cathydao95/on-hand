@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import RecipeContext from "../../context/recipe_context";
 import { AiFillCloseSquare } from "react-icons/ai";
 import { BsSuitHeartFill } from "react-icons/bs";

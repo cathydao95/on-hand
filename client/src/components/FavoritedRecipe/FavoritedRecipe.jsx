@@ -1,8 +1,8 @@
 import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
-import RecipeContext from "../../context/recipe_context";
 import { AiOutlineHeart } from "react-icons/ai";
+import { UserContext } from "../../context/user_context";
 
 const FavoritedRecipe = ({
   _id,
@@ -15,27 +15,34 @@ const FavoritedRecipe = ({
   nutrients,
   yields,
 }) => {
-  const { addToFavorite, favoriteList } = useContext(RecipeContext);
+  const { user, favorites, addToFavorites } = useContext(UserContext);
+
+  let currentUser = {
+    recipeId: _id,
+    userId: user._id,
+  };
+
+  let isFavorite = user.favorites.includes(_id);
 
   return (
     <div className={styles.recipeContainer}>
-      <div className={styles.imageWrapper}>
+      <div>
         <img className={styles.recipeImage} src={image} alt={title} />
-        {/* <button onClick={(e) => addToFavorite(_id)}>
+        <button onClick={(e) => addToFavorites(currentUser)}>
           <AiOutlineHeart className={styles.heartIcon} />
-        </button> */}
+        </button>
       </div>
       <div>
         <Link to={`/recipes/${_id}`}>
-          <h1>{title}</h1>
+          <h5 className={styles.favTitle}>{title}</h5>
         </Link>
       </div>
 
       <div className={styles.info}>
-        <h5 className={styles.calorieInfo}>
-          {nutrients.calories ? nutrients.calories : "N/A"}
-        </h5>
-        <h5 className={styles.timeInfo}>{time} min</h5>
+        <h6 className={styles.calorieInfo}>
+          {nutrients && nutrients.calories ? nutrients.calories : "N/A"}
+        </h6>
+        <h6 className={styles.timeInfo}>{time} min</h6>
       </div>
     </div>
   );

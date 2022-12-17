@@ -9,7 +9,7 @@ const Error = () => {
         <img className={styles.errorImage} src={img} alt="not found" />
         <h3>Oh no! Page not found</h3>
         <p>We can't seem to find the page you're looking for</p>
-        <Link to="/">back home</Link>
+        <Link to="/dashboard">back home</Link>
       </div>
     </div>
   );

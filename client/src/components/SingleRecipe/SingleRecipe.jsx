@@ -30,11 +30,6 @@ const SingleRecipe = ({
 
   let isFavorite = user.favorites && user.favorites.includes(_id);
 
-  // const handleEditClicked = (e) => {
-  //   console.log(_id);
-  //   setEditRecipe(_id);
-  // };
-
   // is it ok to getAllRecipes on each page? need to be simplified?
 
   return (

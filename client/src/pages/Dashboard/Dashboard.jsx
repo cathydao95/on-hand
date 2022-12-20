@@ -8,6 +8,7 @@ import RecipeContext from "../../context/recipe_context";
 import PageButton from "../../components/PageButton/PageButton";
 import Loading from "../../components/Loading/Loading";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 // import { useRecipeContext } from "../../context/recipe_context";
 
@@ -45,11 +46,12 @@ const Dashboard = () => {
     <div>
       <Navbar />
       <div className="pageWrapper">
-        <div className={clsx(styles.title, "title")}>
-          <h1>All Recipes</h1>
+        <div>
+          <h1 className="title">All Recipes</h1>
         </div>
         {/* determine how to implement search function here */}
-        <form onSubmit={handleSubmit}>
+
+        <form className={styles.formContainer} onSubmit={handleSubmit}>
           <div className={styles.formControl}>
             <input
               className={styles.searchInput}
@@ -64,19 +66,19 @@ const Dashboard = () => {
           </div>
         </form>
 
-        <div className={styles.test2}>
-          <div className={styles.recipesContainer}>
-            {recipes.map((ele, index) => {
-              return (
-                <div className={styles.singleRecipeContainer} key={index}>
-                  <SingleRecipe key={index} {...ele} />
-                </div>
-              );
-            })}
-          </div>
+        <div className="container">
+          {recipes.map((ele, index) => {
+            return (
+              <SingleRecipe key={index} {...ele} />
+              // <div className={styles.singleRecipeContainer} key={index}>
+              //   <SingleRecipe key={index} {...ele} />
+              // </div>
+            );
+          })}
         </div>
         <PageButton />
       </div>
+      <Footer />
     </div>
   );
 };

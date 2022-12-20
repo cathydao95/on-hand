@@ -8,6 +8,7 @@ import IngredientList from "../../components/IngredientList/IngredientList";
 import Loading from "../../components/Loading/Loading";
 import SearchedRecipes from "../../components/SearchedRecipes/SearchedRecipes";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 const Search = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -68,11 +69,17 @@ const Search = () => {
   return (
     <div>
       <Navbar />
-      <div className={clsx(styles.pageWrapper, "pageWrapper")}>
-        <div className={clsx(styles.title, "title")}>
-          <h3>Let's get cooking!</h3>
-          <p> What ingredients do you have on hand?</p>
-        </div>
+      <div className="pageWrapper">
+        {showSearch ? (
+          <div className="title">
+            <h3>Recipes Found:</h3>
+          </div>
+        ) : (
+          <div className={styles.textContainer}>
+            <h3 className="title">Let's get cooking!</h3>
+            <p> What ingredients do you have on hand?</p>
+          </div>
+        )}
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className={styles.formControl}>
             {/* remove for now until can implment but text and search function */}
@@ -87,11 +94,10 @@ const Search = () => {
             {!showSearch && searchedRecipes.length < 1 && (
               <button
                 disabled={ingredients.length < 1}
-                className={styles.searchBtn}
+                className={clsx(styles.searchBtn, "btn")}
                 type="submit"
               >
-                <span>Search for Recipes</span>
-                <AiOutlineSearch className={styles.searchIcon} />
+                Search for Recipes
               </button>
             )}
 
@@ -109,7 +115,7 @@ const Search = () => {
             )}
           </div>
         </form>
-        <div className={styles.btnContainer}>
+        <div>
           {searchedRecipes.length > 0 ? (
             <button
               onClick={() => clearSearchResults()}
@@ -118,15 +124,26 @@ const Search = () => {
               Clear Search
             </button>
           ) : (
-            <button
-              onClick={() => clearInput()}
-              className={clsx(styles.clearBtn, "btn")}
-            >
-              {!showSearch ? "Clear All Values" : "Restart Search"}
-            </button>
+            <div className={styles.btnContainer}>
+              <button
+                onClick={() => clearInput()}
+                className={clsx(styles.clearBtn, "btn")}
+              >
+                {!showSearch ? "Clear All Values" : "Restart Search"}
+              </button>
+              <button
+                disabled={ingredients.length < 1}
+                className={clsx(styles.searchBtn, "btn")}
+                type="submit"
+                onClick={(e) => handleSubmit(e)}
+              >
+                Search for Recipes
+              </button>
+            </div>
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -37,21 +37,6 @@ const getAllRecipes = async (req, res) => {
   const allRecipes = await Recipes.find({});
   const numOfPages = Math.ceil(allRecipes.length / limit);
 
-  // pagination
-  // const page = Number(req.query.page) || 5;
-  // const limit = Number(req.query.limit) || 10;
-  // const skip = (page - 1) * limit;
-
-  // console.log("skipp", skip, limit, page);
-  // result = result.limit(10);
-
-  // console.log("result", result);
-
-  // const recipes = await result;
-
-  // const totalRecipes = await Recipes.countDocuments(recipes);
-  // const numOfPages = Math.ceil(totalRecipes / limit);
-
   res
     .status(StatusCodes.OK)
     .json({ recipes, allRecipes, totalRecipes: recipes.length, numOfPages });
@@ -60,7 +45,6 @@ const getAllRecipes = async (req, res) => {
 const getSingleRecipe = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
 
     const recipe = await Recipes.findById(id);
     res.status(StatusCodes.OK).json({ recipe });

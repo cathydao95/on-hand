@@ -6,6 +6,8 @@ import RecipeContext from "../../context/recipe_context";
 import { Link } from "react-router-dom";
 import SingleRecipe from "../../components/SingleRecipe/SingleRecipe";
 import Loading from "../../components/Loading/Loading";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 //  REFACTOR FORM ROWS INTO A NEW COMPONENT FOR RECIPE AND REGISTER
 
@@ -25,26 +27,32 @@ const PersonalRecipes = () => {
   }
 
   return (
-    <div className={clsx(styles.pageWrapper, "pageWrapper")}>
-      <h1 className={styles.title}>Personal Recipes</h1>
+    <div>
+      <Navbar />
+      <div className="pageWrapper">
+        <h1 className="title">Personal Recipes</h1>
 
-      <div className={styles.personalContainer}>
-        {personalRecipes.length > 0 ? (
-          personalRecipes.map((rec, index) => {
-            return <SingleRecipe key={index} {...rec} />;
-          })
-        ) : (
-          <div>
-            <p>You have not created any personal recipes.</p>
-            <p>Know a delicious recipe and want to add to our database?</p>
+        <div className={styles.personalContainer}>
+          {personalRecipes.length > 0 ? (
+            <div className="container">
+              {personalRecipes.map((rec, index) => {
+                return <SingleRecipe key={index} {...rec} />;
+              })}
+            </div>
+          ) : (
+            <div>
+              <p>You have not created any personal recipes.</p>
+              <p>Know a delicious recipe and want to add to our database?</p>
+            </div>
+          )}
+          <div className={styles.btnContainer}>
+            <Link to="/create" className={styles.createBtn}>
+              + Create New Recipe
+            </Link>
           </div>
-        )}
-        <div className={styles.btnContainer}>
-          <Link to="/create" className={styles.createBtn}>
-            + Create New Recipe
-          </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

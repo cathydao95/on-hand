@@ -41,12 +41,12 @@ const Navbar = () => {
           Favorites
         </NavLink>
         <NavLink
-          to="/create"
+          to="/myrecipes"
           className={({ isActive }) =>
             isActive ? styles.linkActive : styles.link
           }
         >
-          Create Recipe
+          Personal Recipes
         </NavLink>
       </div>
       {user && (

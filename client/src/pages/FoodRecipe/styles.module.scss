@@ -1,8 +1,12 @@
-.pageWrapper {
-  padding-bottom: 100px;
-}
 .recipeContainer {
   padding: 20px;
+}
+
+// recipe image
+.recipeImage {
+  width: 100vw;
+  height: 300px;
+  object-fit: cover;
 }
 
 // back button
@@ -16,7 +20,7 @@
 
 .exitIcon {
   color: #f2efef;
-  background-color: #61b3b8;
+  background-color: #000000;
 }
 
 .heartContainer {
@@ -25,44 +29,45 @@
   right: 8px;
   border: none;
   padding: 0;
-  background-color: #61b3b8;
+  background-color: transparent;
 }
-.heartIcon {
-  color: white;
-  font-size: 1.7rem;
+
+.heartIcon,
+.fillHeartIcon {
+  font-size: 2.5rem;
   padding: 5px;
+}
+
+.heartIcon {
+  color: rgb(1, 1, 1);
 }
 
 .fillHeartIcon {
   color: red;
-  font-size: 1.7rem;
-  padding: 5px;
-}
-// recipe image
-.recipeImage {
-  width: 100vw;
-  height: 300px;
-  object-fit: cover;
 }
 
-.textContainer {
+.textContainer,
+.ingContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.ingContainer {
+.servingsContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .ingList {
-  padding: 20px 0px;
+  padding-bottom: 2rem;
+}
+.ing,
+.step {
+  padding: 0.5rem 0;
 }
 
-.step {
-  padding: 0.25rem 0;
-}
 .recipeBtn {
   background-color: #61b3b8;
   text-decoration: none;
@@ -76,7 +81,6 @@
 h1 {
   margin: 0;
   font-size: 1.6rem;
-  padding-bottom: 10px;
 }
 
 h2 {
@@ -84,7 +88,20 @@ h2 {
   font-size: 1.2rem;
 }
 
-p {
-  margin: 0;
-  padding-bottom: 10px;
+@media (min-width: 650px) {
+  .recipeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .recipeBtn {
+    width: 80%;
+  }
+}
+
+@media (min-width: 900px) {
+  .recipeBtn {
+    width: 50%;
+  }
 }

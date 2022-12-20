@@ -179,6 +179,7 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         ...state,
+
         displayAlert,
         clearAlert,
         setupUser,

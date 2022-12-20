@@ -9,7 +9,6 @@ import Error from "./pages/Error/Error";
 import Register from "./pages/Register/Register";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Account from "./pages/Account/Account";
-import Footer from "./components/Footer/Footer";
 import PersonalRecipes from "./pages/PersonalRecipes/PesonalRecipes";
 
 function App() {
@@ -82,7 +81,6 @@ function App() {
 
         <Route path="*" element={<Error />}></Route>
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 }

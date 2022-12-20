@@ -6,7 +6,7 @@ import Alert from "../../components/Alert/Alert";
 import { UserContext } from "../../context/user_context";
 import FormRow from "../../components/FormRow/FormRow";
 
-const intitialState = {
+const initialState = {
   name: "",
   lastName: "",
   email: "",
@@ -15,9 +15,9 @@ const intitialState = {
 };
 
 const Register = () => {
-  const [values, setValues] = useState(intitialState);
   const { isLoading, showAlert, displayAlert, setupUser, user } =
     useContext(UserContext);
+  const [values, setValues] = useState(initialState);
   const navigate = useNavigate();
 
   //   global state and use navigate
@@ -61,11 +61,9 @@ const Register = () => {
     }
   }, [user, navigate]);
   return (
-    <div className={styles.pageWrapper}>
-      <form className={styles.form} onSubmit={onSubmit}>
-        <h3 className={clsx(styles.title, "container")}>
-          {values.isMember ? "Login" : "Register"}
-        </h3>
+    <div className="pageWrapper">
+      <form className="form" onSubmit={onSubmit}>
+        <h3 className="title">{values.isMember ? "Login" : "Register"}</h3>
         {showAlert && <Alert />}
         {!values.isMember && (
           <FormRow

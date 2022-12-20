@@ -109,15 +109,7 @@ const reducer = (state, action) => {
     };
   }
 
-  // if (action.type === GET_USER_FAVORITES) {
-  //   return {
-  //     ...state,
-  //     favorites: action.payload.formattedRecipes,
-  //   };
   if (action.type === GET_USER_FAVORITES) {
-    // let tempFavorites = recipes.map((rec) => user.favorites.inludes(rec._id));
-
-    // console.log(tempFavorites);
     return { ...state, favorites: action.payload.formattedRecipes };
   }
   throw new Error(`no such action : ${action.type}`);

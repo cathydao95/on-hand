@@ -7,15 +7,17 @@ import { TfiFaceSad } from "react-icons/tfi";
 const SearchedRecipes = () => {
   const { searchedRecipes } = useContext(RecipeContext);
   return (
-    <div className={styles.searchResultContainer}>
+    <div>
       {searchedRecipes.length > 0 ? (
-        searchedRecipes.map((ele, index) => {
-          return (
-            <div className={styles.singleRecipeContainer} key={index}>
-              <SingleRecipe key={index} {...ele} />
-            </div>
-          );
-        })
+        <div className="container">
+          {searchedRecipes.map((ele, index) => {
+            return (
+              <div className={styles.singleRecipeContainer} key={index}>
+                <SingleRecipe key={index} {...ele} />
+              </div>
+            );
+          })}
+        </div>
       ) : (
         <div className={styles.noRecipes}>
           <TfiFaceSad className={styles.sadIcon} />

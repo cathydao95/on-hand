@@ -1,28 +1,30 @@
-.pageWrapper {
-  padding: 20px;
-  height: 600px;
-}
-
-.form {
-  display: grid;
-  align-items: center;
-  padding: 1rem 1rem;
-  gap: 1.5rem;
-  // margin: 1rem;
-}
-
 .memberText {
   font-size: 1rem;
+  margin: 0;
+  padding: 0;
 }
 .memberContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 5px;
 }
 // buttons
 .memberBtn {
   border: none;
   background: var(--white);
   color: var(--blue);
+  font-size: 1rem;
+}
+
+@media (min-width: 600px) {
+  .memberText {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+  }
+  .memberContainer {
+    flex-direction: row;
+  }
 }

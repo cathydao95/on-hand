@@ -1,11 +1,13 @@
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import RecipeContext from "../../context/recipe_context";
 import { UserContext } from "../../context/user_context";
 import FormRow from "../../components/FormRow/FormRow";
 import Alert from "../../components/Alert/Alert";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 //  REFACTOR FORM ROWS INTO A NEW COMPONENT FOR RECIPE AND REGISTER
 
@@ -55,62 +57,66 @@ const CreateRecipe = () => {
   };
 
   return (
-    <div className={styles.pageWrapper}>
-      <form className={styles.form} onSubmit={onSubmit}>
-        <h3 className={clsx(styles.title, "container")}>
-          {isEditing ? "Edit Recipe" : "Create Recipe"}
-        </h3>
-        <Alert />
-        <FormRow
-          type="text"
-          name="title"
-          value={title}
-          handleChange={handleRecipeInput}
-        />
-        <FormRow
-          type="text"
-          name="yields"
-          value={yields}
-          handleChange={handleRecipeInput}
-        />
-        <FormRow
-          type="text"
-          name="time"
-          value={time}
-          handleChange={handleRecipeInput}
-        />
-        <FormRow
-          type="text"
-          name="ingredients"
-          value={ingredients}
-          handleChange={handleRecipeInput}
-        />
-        <FormRow
-          type="text"
-          name="instructions"
-          value={instructions}
-          handleChange={handleRecipeInput}
-        />
-        <div className={styles.btnContainer}>
-          <button
-            type="submit"
-            onClick={onSubmit}
-            className={clsx(styles.btn, "btn")}
-          >
-            {isEditing ? "Update Recipe" : "Save Recipe"}
-          </button>
+    <div>
+      <Navbar />
+      <div className="pageWrapper">
+        <form className={styles.form} onSubmit={onSubmit}>
+          <h3 className={clsx(styles.title, "title")}>
+            {isEditing ? "Edit Recipe" : "Create Recipe"}
+          </h3>
+          <Alert />
+          <FormRow
+            type="text"
+            name="title"
+            value={title}
+            handleChange={handleRecipeInput}
+          />
+          <FormRow
+            type="text"
+            name="yields"
+            value={yields}
+            handleChange={handleRecipeInput}
+          />
+          <FormRow
+            type="text"
+            name="time"
+            value={time}
+            handleChange={handleRecipeInput}
+          />
+          <FormRow
+            type="text"
+            name="ingredients"
+            value={ingredients}
+            handleChange={handleRecipeInput}
+          />
+          <FormRow
+            type="text"
+            name="instructions"
+            value={instructions}
+            handleChange={handleRecipeInput}
+          />
+          <div className={styles.btnContainer}>
+            <button
+              type="submit"
+              onClick={onSubmit}
+              className={clsx(styles.btn, "btn")}
+            >
+              {isEditing ? "Update Recipe" : "Save Recipe"}
+            </button>
 
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              clearValues();
-            }}
-            className={clsx(styles.btn, "btn")}
-          >
-            Clear
-          </button>
-        </div>
-      </form>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                clearValues();
+              }}
+              className={clsx(styles.btn, "btn")}
+            >
+              Clear
+            </button>
+          </div>
+        </form>
+      </div>
+      <Footer />
     </div>
   );
 };

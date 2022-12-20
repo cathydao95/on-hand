@@ -4,6 +4,8 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../context/user_context";
 import FormRow from "../../components/FormRow/FormRow";
 import Alert from "../../components/Alert/Alert";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 //  REFACTOR FORM ROWS INTO A NEW COMPONENT FOR RECIPE AND REGISTER
 
@@ -25,37 +27,38 @@ const Account = () => {
   };
 
   return (
-    <div className={styles.pageWrapper}>
-      <form className={styles.form} onSubmit={onSubmit}>
-        <h3 className={clsx(styles.title, "container")}>User Profile</h3>
-        {showAlert && <Alert />}
-        <FormRow
-          type="text"
-          name="name"
-          value={name}
-          handleChange={(e) => setName(e.target.value)}
-        />
+    <div>
+      <Navbar />
+      <div className="pageWrapper">
+        <h3 className="title">User Profile</h3>
+        <form className="form" onSubmit={onSubmit}>
+          {showAlert && <Alert />}
+          <FormRow
+            type="text"
+            name="name"
+            value={name}
+            handleChange={(e) => setName(e.target.value)}
+          />
 
-        <FormRow
-          type="text"
-          labelText="last name"
-          name="lastName"
-          value={lastName}
-          handleChange={(e) => setLastName(e.target.value)}
-        />
-        <FormRow
-          type="email"
-          name="email"
-          value={email}
-          handleChange={(e) => setEmail(e.target.value)}
-        />
-        <button type="submit" className={clsx("btn")} disabled={isLoading}>
-          {isLoading ? "Loading..." : "Save Changes"}
-        </button>
-      </form>
-      <button type="button" className="btn" onClick={logOutUser}>
-        logout
-      </button>
+          <FormRow
+            type="text"
+            labelText="last name"
+            name="lastName"
+            value={lastName}
+            handleChange={(e) => setLastName(e.target.value)}
+          />
+          <FormRow
+            type="email"
+            name="email"
+            value={email}
+            handleChange={(e) => setEmail(e.target.value)}
+          />
+          <button type="submit" className={clsx("btn")} disabled={isLoading}>
+            {isLoading ? "Loading..." : "Save Changes"}
+          </button>
+        </form>
+      </div>
+      <Footer />
     </div>
   );
 };

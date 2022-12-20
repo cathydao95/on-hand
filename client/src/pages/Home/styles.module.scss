@@ -37,19 +37,21 @@
   gap: 15px;
 }
 
-.loginBtn {
-  width: 80%;
-  background-color: #00b4bf;
-  color: white;
-  border: none;
-  height: 30px;
-  text-decoration: none;
-}
-
+.loginBtn,
 .createBtn {
   width: 80%;
   color: white;
-  background-color: transparent;
   border: none;
   text-decoration: none;
+}
+
+.loginBtn {
+  background-color: #00b4bf;
+  padding: 5px;
+}
+
+@media (min-width: 1000px) {
+  .pageWrapper {
+    background-position: center;
+  }
 }

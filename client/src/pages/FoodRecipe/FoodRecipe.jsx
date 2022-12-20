@@ -27,6 +27,8 @@ const FoodRecipe = () => {
 
   let isFavorite = user.favorites.includes(_id);
 
+  let isPersonal = user.personalRecipes.includes(_id);
+
   const currentUser = {
     recipeId: _id,
     userId: user._id,
@@ -54,6 +56,7 @@ const FoodRecipe = () => {
               />
             </button>
           </div>
+
           <div className={styles.recipeContainer}>
             <div>
               <div className={styles.textContainer}>
@@ -62,12 +65,19 @@ const FoodRecipe = () => {
               </div>
               <div className={styles.ingContainer}>
                 <h2>Ingredients</h2>
-                <h2>Servings: {yields}</h2>
+                <div className={styles.servingsContainer}>
+                  <h2>Servings:</h2>
+                  <p>{yields}</p>
+                </div>
               </div>
               <div className={styles.ingList}>
                 {ingredients &&
                   ingredients.map((ingredient, index) => {
-                    return <li key={index}>{ingredient}</li>;
+                    return (
+                      <li className={styles.ing} key={index}>
+                        {ingredient}
+                      </li>
+                    );
                   })}
               </div>
               <div className={styles.ingContainer}>
@@ -85,14 +95,16 @@ const FoodRecipe = () => {
               </div>
             </div>
 
-            <a
-              href={link}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.recipeBtn}
-            >
-              See Full Recipe
-            </a>
+            {!isPersonal && (
+              <a
+                href={link}
+                target="_blank"
+                rel="noreferrer"
+                className={styles.recipeBtn}
+              >
+                See Full Recipe
+              </a>
+            )}
           </div>
         </div>
       ) : (

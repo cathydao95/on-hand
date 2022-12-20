@@ -48,7 +48,6 @@ const recipe_reducer = (state, action) => {
   }
 
   if (action.type === CHANGE_LIMIT) {
-    console.log(action.payload.limit);
     return { ...state, limit: action.payload.limit };
   }
   if (action.type === SEARCH_RECIPES_BEGIN) {

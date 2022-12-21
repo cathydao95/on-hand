@@ -20,7 +20,7 @@
 
 .exitIcon {
   color: #f2efef;
-  background-color: #000000;
+  background-color: var(--black);
 }
 
 .heartContainer {
@@ -30,20 +30,6 @@
   border: none;
   padding: 0;
   background-color: transparent;
-}
-
-.heartIcon,
-.fillHeartIcon {
-  font-size: 2.5rem;
-  padding: 5px;
-}
-
-.heartIcon {
-  color: rgb(1, 1, 1);
-}
-
-.fillHeartIcon {
-  color: red;
 }
 
 .textContainer,

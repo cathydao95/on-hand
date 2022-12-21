@@ -52,7 +52,7 @@ const FoodRecipe = () => {
               className={styles.heartContainer}
             >
               <BsSuitHeartFill
-                className={isFavorite ? styles.fillHeartIcon : styles.heartIcon}
+                className={isFavorite ? "fillHeartIcon" : "heartIcon"}
               />
             </button>
           </div>

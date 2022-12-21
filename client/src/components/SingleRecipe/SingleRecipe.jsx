@@ -42,7 +42,7 @@ const SingleRecipe = ({
             onClick={(e) => addToFavorites(currentUser)}
           >
             <AiFillHeart
-              className={isFavorite ? styles.fillHeartIcon : styles.heartIcon}
+              className={isFavorite ? "fillHeartIcon" : "heartIcon"}
             />
           </button>
         </div>

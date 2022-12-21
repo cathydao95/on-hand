@@ -1,5 +1,5 @@
 .recipeContainer {
-  background-color: #f6f6f6;
+  background-color: var(--light-grey);
   padding: 10px;
   height: 100%;
 }
@@ -27,7 +27,7 @@
 .info {
   display: flex;
   gap: 25px;
-  color: #868686;
+  color: var(--grey);
 }
 
 .calorieInfo,
@@ -42,17 +42,6 @@
   transform: translate(-30%, -0%);
   -ms-transform: translate(-30%, -0%);
   background-color: none;
-}
-
-.heartIcon {
-  color: black;
-  font-size: 1.5rem;
-  background-color: none;
-}
-
-.fillHeartIcon {
-  color: red;
-  font-size: 1.5rem;
 }
 
 .btnContainer {

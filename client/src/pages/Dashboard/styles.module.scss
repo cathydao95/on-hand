@@ -5,7 +5,7 @@
 .formControl {
   display: flex;
   justify-content: center;
-  background-color: white;
+  background-color: var(--white);
 }
 
 // Search Bar
@@ -14,14 +14,14 @@
   flex-basis: 90%;
   height: 2rem;
   text-align: left;
-  border: 1px solid #00b4bf;
+  border: 1px solid var(--blue);
   padding-left: 10px;
   outline: none;
 }
 
 .searchBtn {
   flex-basis: 10%;
-  background-color: #00b4bf;
+  background-color: var(--blue);
   color: white;
   border: none;
 }

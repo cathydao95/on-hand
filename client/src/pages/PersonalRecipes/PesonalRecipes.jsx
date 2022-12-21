@@ -40,7 +40,7 @@ const PersonalRecipes = () => {
               })}
             </div>
           ) : (
-            <div>
+            <div className={styles.personalText}>
               <p>You have not created any personal recipes.</p>
               <p>Know a delicious recipe and want to add to our database?</p>
             </div>

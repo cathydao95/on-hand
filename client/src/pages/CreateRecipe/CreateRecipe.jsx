@@ -24,7 +24,7 @@ const CreateRecipe = () => {
     clearValues,
     createRecipe,
     updateRecipe,
-    deleteRecipe,
+    showAlert,
   } = useContext(RecipeContext);
 
   const { displayAlert } = useContext(UserContext);
@@ -47,13 +47,13 @@ const CreateRecipe = () => {
     if (isEditing) {
       updateRecipe();
 
-      navigate("/myrecipes");
+      // navigate("/myrecipes");
 
       return;
     }
 
     createRecipe();
-    navigate("/myrecipes");
+    // navigate("/myrecipes");
   };
 
   return (

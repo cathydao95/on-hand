@@ -38,11 +38,11 @@
 
 .select {
   font-size: 1rem;
-  display: none;
+  visibility: hidden;
 }
 
 @media (min-width: 500px) {
   .select {
-    display: block;
+    visibility: visible;
   }
 }

@@ -8,8 +8,8 @@ const Footer = () => {
         <IconRoutes />
       </div>
 
-      <div>
-        <div>©2022 On Hand. | Designed and Coded by CD.</div>
+      <div className={styles.footerText}>
+        ©2022 On Hand. Designed and Coded by CD.
       </div>
     </div>
   );

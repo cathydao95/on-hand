@@ -4,7 +4,7 @@
   align-items: center;
   background-color: var(--blue);
   color: var(--white);
-  padding: 1.5rem 0;
+  padding: 1.25rem 0;
 }
 
 .title {
@@ -67,7 +67,7 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .accountContainer:hover .accountBtn {
-  background-color: #549ce0;
+  background-color: var(--dark-blue);
 }
 
 .navLinks {
@@ -84,12 +84,12 @@
   }
   .linkActive {
     padding-bottom: 5px;
-    border-bottom: 4px solid #00b4bf;
+    border-bottom: 4px solid var(--blue);
     text-decoration: none;
     color: var(--white);
     margin: 0;
     padding: 0;
-    font-size: 1.15rem;
+    font-size: 1rem;
   }
 
   .link {
@@ -97,7 +97,7 @@
     color: var(--white);
     margin: 0;
     padding: 0;
-    font-size: 1.15rem;
+    font-size: 1rem;
   }
 }
 
@@ -109,6 +109,6 @@
   .linkActive,
   .link,
   .accountBtn {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
   }
 }

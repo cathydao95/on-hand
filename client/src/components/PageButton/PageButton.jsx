@@ -54,12 +54,10 @@ const PageButton = () => {
         <select
           className={styles.select}
           value={limit}
-          size="4"
+          // size="4"
           onChange={(e) => changeLimit(e.target.value)}
         >
-          <option value="12" className={styles.option}>
-            12
-          </option>
+          <option value="12">12</option>
           <option value="24">24</option>
           <option value="48">48</option>
           <option value="60">60</option>

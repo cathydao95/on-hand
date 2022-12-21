@@ -38,13 +38,13 @@ const Register = () => {
       setupUser({
         currentUser,
         endPoint: "login",
-        alertText: "Login Successful. Redirecting",
+        alertText: "Login Successful. Redirecting...",
       });
     } else {
       setupUser({
         currentUser,
         endPoint: "register",
-        alertText: "Successfully Created Account. Redirecting",
+        alertText: "Successfully Created Account. Redirecting...",
       });
     }
   };
@@ -64,7 +64,7 @@ const Register = () => {
     <div className="pageWrapper">
       <form className="form" onSubmit={onSubmit}>
         <h3 className="title">{values.isMember ? "Login" : "Register"}</h3>
-        {showAlert && <Alert />}
+        <div>{showAlert && <Alert />}</div>
         {!values.isMember && (
           <FormRow
             type="text"
@@ -117,57 +117,3 @@ const Register = () => {
 };
 
 export default Register;
-
-// {!values.isMember && (
-//   <div className={styles.formRow}>
-//     <label htmlFor="name" className={styles.formLabel}>
-//       Name
-//     </label>
-//     <input
-//       type="text"
-//       value={values.name}
-//       name="name"
-//       onChange={handleChange}
-//       className={styles.formInput}
-//     />
-//   </div>
-// )}
-// {!values.isMember && (
-//   <div className={styles.formRow}>
-//     <label htmlFor="lastName" className={styles.formLabel}>
-//       Last Name
-//     </label>
-//     <input
-//       type="text"
-//       value={values.lastName}
-//       name="lastName"
-//       onChange={handleChange}
-//       className={styles.formInput}
-//     />
-//   </div>
-// )}
-
-// <div className={styles.formRow}>
-//   <label htmlFor="email" className={styles.formLabel}>
-//     Email
-//   </label>
-//   <input
-//     type="email"
-//     value={values.email}
-//     name="email"
-//     onChange={handleChange}
-//     className={styles.formInput}
-//   />
-// </div>
-// <div className={styles.formRow}>
-//   <label htmlFor="password" className={styles.formLabel}>
-//     Password
-//   </label>
-//   <input
-//     type="password"
-//     value={values.password}
-//     name="password"
-//     onChange={handleChange}
-//     className={styles.formInput}
-//   />
-// </div>

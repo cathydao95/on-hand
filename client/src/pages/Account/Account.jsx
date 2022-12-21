@@ -31,8 +31,8 @@ const Account = () => {
       <Navbar />
       <div className="pageWrapper">
         <h3 className="title">User Profile</h3>
+        <div className="alert">{showAlert && <Alert />}</div>
         <form className="form" onSubmit={onSubmit}>
-          {showAlert && <Alert />}
           <FormRow
             type="text"
             name="name"
@@ -58,6 +58,7 @@ const Account = () => {
           </button>
         </form>
       </div>
+
       <Footer />
     </div>
   );

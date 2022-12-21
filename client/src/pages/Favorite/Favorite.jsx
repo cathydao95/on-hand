@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { IoHeartCircleSharp } from "react-icons/io5";
-import { UserContext } from "../../context/user_context";
+import UserContext from "../../context/user_context";
 import SingleRecipe from "../../components/SingleRecipe/SingleRecipe";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";

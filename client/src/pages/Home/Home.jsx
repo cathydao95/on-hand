@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { UserContext } from "../../context/user_context";
+import UserContext from "../../context/user_context";
 
 const Home = () => {
   const { toggleRegistered } = useContext(UserContext);

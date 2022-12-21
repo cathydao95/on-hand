@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import RecipeContext from "../../context/recipe_context";
 import { AiFillHeart } from "react-icons/ai";
-import { UserContext } from "../../context/user_context";
+import UserContext from "../../context/user_context";
 import { useEffect } from "react";
 
 const SingleRecipe = ({

@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { useContext, useEffect } from "react";
-import { UserContext } from "../../context/user_context";
+import UserContext from "../../context/user_context";
 import RecipeContext from "../../context/recipe_context";
 import { Link } from "react-router-dom";
 import SingleRecipe from "../../components/SingleRecipe/SingleRecipe";

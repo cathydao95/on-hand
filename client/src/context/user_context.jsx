@@ -24,7 +24,7 @@ const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
 const favorites = localStorage.getItem("favorites");
 
-const initialState = {
+export const initialState = {
   isLoading: false,
   showAlert: false,
   alertText: "",
@@ -37,7 +37,7 @@ const initialState = {
 
 const UserContext = React.createContext();
 
-const UserProvider = ({ children }) => {
+export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // axios instance
@@ -195,4 +195,4 @@ const UserProvider = ({ children }) => {
   );
 };
 
-export { UserProvider, initialState, UserContext };
+export default UserContext;

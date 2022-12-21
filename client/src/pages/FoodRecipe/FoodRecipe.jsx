@@ -4,7 +4,7 @@ import { useEffect, useContext } from "react";
 import RecipeContext from "../../context/recipe_context";
 import { AiFillCloseSquare } from "react-icons/ai";
 import { BsSuitHeartFill } from "react-icons/bs";
-import { UserContext } from "../../context/user_context";
+import UserContext from "../../context/user_context";
 import Loading from "../../components/Loading/Loading";
 // import { useRecipeContext } from "../../context/recipe_context";
 // individual receipe page for an item, may need to rename

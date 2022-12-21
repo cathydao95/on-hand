@@ -9,7 +9,7 @@ import {
   AiOutlinePlus,
   AiOutlineUser,
 } from "react-icons/ai";
-import { UserContext } from "../../context/user_context";
+import UserContext from "../../context/user_context";
 
 const IconRoutes = () => {
   const { logOutUser } = useContext(UserContext);

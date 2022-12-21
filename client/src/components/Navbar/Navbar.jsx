@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import styles from "./styles.module.scss";
 import IconRoutes from "../IconRoutes/IconRoutes";
 
-import { UserContext } from "../../context/user_context";
+import UserContext from "../../context/user_context";
 
 const Navbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);

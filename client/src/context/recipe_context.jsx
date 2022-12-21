@@ -1,7 +1,7 @@
 import React, { useReducer, useContext, useEffect } from "react";
 import reducer from "../reducers/recipe_reducer";
 import axios from "axios";
-import { UserContext } from "./user_context";
+import UserContext from "./user_context";
 
 import {
   SEARCH_RECIPES_BEGIN,

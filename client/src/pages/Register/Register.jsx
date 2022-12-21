@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import Alert from "../../components/Alert/Alert";
-import { UserContext } from "../../context/user_context";
+import UserContext from "../../context/user_context";
 import FormRow from "../../components/FormRow/FormRow";
 
 const initialState = {

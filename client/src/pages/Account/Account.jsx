@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { useState, useContext } from "react";
-import { UserContext } from "../../context/user_context";
+import UserContext from "../../context/user_context";
 import FormRow from "../../components/FormRow/FormRow";
 import Alert from "../../components/Alert/Alert";
 import Navbar from "../../components/Navbar/Navbar";

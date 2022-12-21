@@ -145,6 +145,9 @@ const recipe_reducer = (state, action) => {
     return {
       ...state,
       allRecipes: action.payload.allRecipes,
+      // showAlert: true,
+      // alertType: "success",
+      // alertText: "Recipe Created",
     };
   }
   if (action.type === CREATE_RECIPE_ERROR) {
@@ -166,8 +169,8 @@ const recipe_reducer = (state, action) => {
       ...state,
       isEditing: false,
       isLoading: false,
-      alertType: "success",
-      alertText: "Success. Recipe updated",
+      // alertType: "success",
+      // alertText: "Success. Recipe updated",
     };
   }
 
@@ -176,8 +179,8 @@ const recipe_reducer = (state, action) => {
       ...state,
       isLoading: false,
       isEditing: false,
-      alertType: "danger",
-      alertText: "Error. Recipe not updated",
+      // alertType: "danger",
+      // alertText: "Error. Recipe not updated",
     };
   }
 

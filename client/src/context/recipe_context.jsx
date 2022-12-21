@@ -9,7 +9,6 @@ import {
   SEARCH_RECIPES_ERROR,
   GET_SINGLE_RECIPE_BEGIN,
   GET_SINGLE_RECIPE_SUCCESS,
-  // GET_SINGLE_RECIPE_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
   CREATE_RECIPE_BEGIN,
@@ -18,17 +17,14 @@ import {
   GET_ALL_RECIPES_SUCCESS,
   GET_ALL_RECIPES_BEGIN,
   CHANGE_PAGE,
-  // RESET_PAGE,
   CHANGE_LIMIT,
   SET_EDIT_RECIPE,
   UPDATE_RECIPE_BEGIN,
   UPDATE_RECIPE_SUCCESS,
   UPDATE_RECIPE_ERROR,
   DELETE_RECIPE_BEGIN,
-  DELETE_RECIPE_SUCCESS,
   DELETE_RECIPE_ERROR,
 } from "../actions";
-import { Navigate } from "react-router-dom";
 
 const searchedRecipes = localStorage.getItem("searchedRecipes");
 
@@ -75,11 +71,6 @@ export const RecipeProvider = ({ children }) => {
     }
   );
 
-  // When user changes, reset page
-  // useEffect(() => {
-  //   dispatch({ type: RESET_PAGE });
-  // }, [token]);
-
   // GET ALL RECIPES
 
   const getAllRecipes = async () => {
@@ -110,6 +101,8 @@ export const RecipeProvider = ({ children }) => {
     dispatch({ type: CHANGE_LIMIT, payload: { limit } });
   };
 
+  // SEARCH RECIPE
+
   const searchRecipes = (ingredients) => {
     dispatch({ type: SEARCH_RECIPES_BEGIN });
     // DO WE NEED TRY AND CATCH? ****
@@ -136,16 +129,6 @@ export const RecipeProvider = ({ children }) => {
   };
 
   // CREATE RECIPE FUNCTIONS
-  const handleChange = ({ name, value }) => {
-    dispatch({
-      type: HANDLE_CHANGE,
-      payload: { name, value },
-    });
-  };
-
-  const clearValues = () => {
-    dispatch({ type: CLEAR_VALUES });
-  };
 
   const createRecipe = async () => {
     dispatch({ type: CREATE_RECIPE_BEGIN });
@@ -171,6 +154,17 @@ export const RecipeProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
+  };
+
+  const handleChange = ({ name, value }) => {
+    dispatch({
+      type: HANDLE_CHANGE,
+      payload: { name, value },
+    });
+  };
+
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES });
   };
 
   const addSearchToLocalStorage = (searchedRecipes) => {

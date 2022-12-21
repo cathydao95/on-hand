@@ -22,12 +22,15 @@ const register = async (req, res) => {
   const user = await User.create({ name, lastName, email, password });
   const token = user.createJWT();
 
-  // res.status(StatusCodes.CREATED).json({
-  //   user: { email: user.email, lastName: user.lastName, name: user.name },
-  //   token,
-  // });
   res.status(StatusCodes.CREATED).json({
-    user,
+    user: {
+      email: user.email,
+      lastName: user.lastName,
+      name: user.name,
+      _id: user._id,
+      favorites: user.favorites,
+      personalRecipes: user.personalRecipes,
+    },
     token,
     formattedRecipes,
   });

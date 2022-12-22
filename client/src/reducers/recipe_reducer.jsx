@@ -1,7 +1,10 @@
 import {
-  SEARCH_RECIPES_BEGIN,
-  SEARCH_RECIPES_SUCCESS,
-  // SEARCH_RECIPES_ERROR,
+  SEARCH_RECIPE_NAME_BEGIN,
+  SEARCH_RECIPE_NAME_SUCCESS,
+  // SEARCH_RECIPE_NAME_ERROR,
+  SEARCH_INGREDIENTS_BEGIN,
+  SEARCH_INGREDIENTS_SUCCESS,
+  // SEARCH_INGREDIENTS_ERROR,
   GET_SINGLE_RECIPE_BEGIN,
   GET_SINGLE_RECIPE_SUCCESS,
   GET_SINGLE_RECIPE_ERROR,
@@ -22,10 +25,14 @@ import {
   DELETE_RECIPE_BEGIN,
   DELETE_RECIPE_SUCCESS,
   DELETE_RECIPE_ERROR,
+  CLEAR_ALERT,
 } from "../actions";
 import { initialState } from "../context/recipe_context";
 
 const recipe_reducer = (state, action) => {
+  if (action.type === CLEAR_ALERT) {
+    return { ...state, showAlert: false, alertType: "", alertText: "" };
+  }
   if (action.type === GET_ALL_RECIPES_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
   }
@@ -44,16 +51,36 @@ const recipe_reducer = (state, action) => {
   }
 
   if (action.type === CHANGE_PAGE) {
-    return { ...state, page: action.payload.page };
+    return { ...state, page: action.payload };
   }
 
   if (action.type === CHANGE_LIMIT) {
     return { ...state, limit: action.payload.limit };
   }
-  if (action.type === SEARCH_RECIPES_BEGIN) {
+  // search recipe by name
+
+  if (action.type === SEARCH_RECIPE_NAME_BEGIN) {
     return { ...state, isLoading: true };
   }
-  if (action.type === SEARCH_RECIPES_SUCCESS) {
+  if (action.type === SEARCH_RECIPE_NAME_SUCCESS) {
+    const { allRecipes } = state;
+
+    console.log(action.payload);
+    let tempSearch = allRecipes.filter((rec) => {
+      return rec.title.toLowerCase().includes(action.payload);
+    });
+
+    return {
+      ...state,
+      isLoading: false,
+      searchedRecipes: tempSearch,
+    };
+  }
+  // search recipe by ingredients
+  if (action.type === SEARCH_INGREDIENTS_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === SEARCH_INGREDIENTS_SUCCESS) {
     const { allRecipes } = state;
     let tempSearch = [];
 
@@ -144,10 +171,8 @@ const recipe_reducer = (state, action) => {
   if (action.type === CREATE_RECIPE_SUCCESS) {
     return {
       ...state,
+      isLoading: false,
       allRecipes: action.payload.allRecipes,
-      // showAlert: true,
-      // alertType: "success",
-      // alertText: "Recipe Created",
     };
   }
   if (action.type === CREATE_RECIPE_ERROR) {
@@ -169,8 +194,6 @@ const recipe_reducer = (state, action) => {
       ...state,
       isEditing: false,
       isLoading: false,
-      // alertType: "success",
-      // alertText: "Success. Recipe updated",
     };
   }
 
@@ -179,8 +202,6 @@ const recipe_reducer = (state, action) => {
       ...state,
       isLoading: false,
       isEditing: false,
-      // alertType: "danger",
-      // alertText: "Error. Recipe not updated",
     };
   }
 
@@ -197,8 +218,8 @@ const recipe_reducer = (state, action) => {
       title,
       yields,
       time,
-      ingredients,
-      instructions,
+      ingredients: ingredients.join(", "),
+      instructions: instructions.join(". "),
     };
   }
 
@@ -206,9 +227,6 @@ const recipe_reducer = (state, action) => {
     return {
       ...state,
       isLoading: true,
-      showAlert: true,
-      alertType: "success",
-      alertText: "recipe deleted",
     };
   }
 
@@ -216,9 +234,6 @@ const recipe_reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: action.payload.msg,
     };
   }
 };

@@ -7,7 +7,6 @@ import IconRoutes from "../IconRoutes/IconRoutes";
 import UserContext from "../../context/user_context";
 
 const Navbar = () => {
-  const [showDropDown, setShowDropDown] = useState(false);
   const { logOutUser, user } = useContext(UserContext);
 
   return (
@@ -51,11 +50,7 @@ const Navbar = () => {
       </div>
       {user && (
         <div className={styles.accountContainer}>
-          <button
-            type="button"
-            onClick={() => setShowDropDown(!showDropDown)}
-            className={styles.accountBtn}
-          >
+          <button type="button" className={styles.accountBtn}>
             <FaUserCircle />
             {user?.name}
             <FaCaretDown />

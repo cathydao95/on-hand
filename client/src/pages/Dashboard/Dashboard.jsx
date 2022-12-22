@@ -9,21 +9,33 @@ import PageButton from "../../components/PageButton/PageButton";
 import Loading from "../../components/Loading/Loading";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 // import { useRecipeContext } from "../../context/recipe_context";
 
 const Dashboard = () => {
   const [userInput, setUserInput] = useState("");
+  const navigate = useNavigate();
 
-  const { recipes, getAllRecipes, isLoading, page, limit } =
-    useContext(RecipeContext);
+  const {
+    recipes,
+    getAllRecipes,
+    clearValues,
+    isLoading,
+    page,
+    limit,
+    searchRecipeName,
+  } = useContext(RecipeContext);
 
   useEffect(() => {
+    clearValues();
     getAllRecipes();
   }, [page, limit]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    searchRecipeName(userInput);
+    navigate("/searchedrecipes");
   };
 
   const handleChange = (e) => {
@@ -33,14 +45,6 @@ const Dashboard = () => {
   if (isLoading) {
     return <Loading />;
   }
-
-  // Figure out why getting no recipes sometimes after refresh
-
-  // if (recipes.length === 0) {
-  //   return <div>No Recipes to Display</div>;
-  // }
-
-  // implement scroll to top
 
   return (
     <div>

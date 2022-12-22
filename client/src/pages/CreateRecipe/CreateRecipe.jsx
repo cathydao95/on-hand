@@ -4,7 +4,7 @@ import { useContext } from "react";
 import RecipeContext from "../../context/recipe_context";
 import UserContext from "../../context/user_context";
 import FormRow from "../../components/FormRow/FormRow";
-import Alert from "../../components/Alert/Alert";
+
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
@@ -24,10 +24,11 @@ const CreateRecipe = () => {
     clearValues,
     createRecipe,
     updateRecipe,
-    showAlert,
   } = useContext(RecipeContext);
 
   const { displayAlert } = useContext(UserContext);
+
+  console.log(ingredients, instructions);
 
   const handleRecipeInput = (e) => {
     const name = e.target.name;
@@ -53,6 +54,7 @@ const CreateRecipe = () => {
     }
 
     createRecipe();
+
     // navigate("/myrecipes");
   };
 
@@ -64,7 +66,7 @@ const CreateRecipe = () => {
           <h3 className={clsx(styles.title, "title")}>
             {isEditing ? "Edit Recipe" : "Create Recipe"}
           </h3>
-          <Alert />
+
           <FormRow
             type="text"
             name="title"

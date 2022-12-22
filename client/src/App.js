@@ -10,6 +10,7 @@ import Register from "./pages/Register/Register";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Account from "./pages/Account/Account";
 import PersonalRecipes from "./pages/PersonalRecipes/PesonalRecipes";
+import RecipesFound from "./pages/RecipesFound/RecipesFound";
 
 function App() {
   return (
@@ -58,6 +59,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Search />
+            </ProtectedRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/searchedrecipes"
+          element={
+            <ProtectedRoute>
+              <RecipesFound />
             </ProtectedRoute>
           }
         ></Route>

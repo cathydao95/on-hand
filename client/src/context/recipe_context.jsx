@@ -4,9 +4,12 @@ import axios from "axios";
 import UserContext from "./user_context";
 
 import {
-  SEARCH_RECIPES_BEGIN,
-  SEARCH_RECIPES_SUCCESS,
-  SEARCH_RECIPES_ERROR,
+  SEARCH_RECIPE_NAME_BEGIN,
+  SEARCH_RECIPE_NAME_SUCCESS,
+  SEARCH_RECIPE_NAME_ERROR,
+  SEARCH_INGREDIENTS_BEGIN,
+  SEARCH_INGREDIENTS_SUCCESS,
+  SEARCH_INGREDIENTS_ERROR,
   GET_SINGLE_RECIPE_BEGIN,
   GET_SINGLE_RECIPE_SUCCESS,
   HANDLE_CHANGE,
@@ -40,10 +43,8 @@ export const initialState = {
   searchedRecipes: searchedRecipes ? JSON.parse(searchedRecipes) : [],
   singleRecipe: {},
   editRecipeId: "",
-  isLoading: true,
-  showAlert: false,
-  alertType: "",
-  alertText: "",
+  isLoading: false,
+
   numOfPages: 1,
   page: 1,
   limit: 12,
@@ -101,15 +102,25 @@ export const RecipeProvider = ({ children }) => {
     dispatch({ type: CHANGE_LIMIT, payload: { limit } });
   };
 
-  // SEARCH RECIPE
+  // SEARCH RECIPE BY NAME
+  const searchRecipeName = (recipe) => {
+    dispatch({ type: SEARCH_RECIPE_NAME_BEGIN });
+    try {
+      dispatch({ type: SEARCH_RECIPE_NAME_SUCCESS, payload: recipe });
+    } catch (error) {
+      dispatch({ type: SEARCH_RECIPE_NAME_ERROR });
+    }
+  };
 
-  const searchRecipes = (ingredients) => {
-    dispatch({ type: SEARCH_RECIPES_BEGIN });
+  // SEARCH RECIPE BY INGREDIENT
+
+  const searchIngredients = (ingredients) => {
+    dispatch({ type: SEARCH_INGREDIENTS_BEGIN });
     // DO WE NEED TRY AND CATCH? ****
     try {
-      dispatch({ type: SEARCH_RECIPES_SUCCESS, payload: ingredients });
-    } catch {
-      dispatch({ type: SEARCH_RECIPES_ERROR });
+      dispatch({ type: SEARCH_INGREDIENTS_SUCCESS, payload: ingredients });
+    } catch (error) {
+      dispatch({ type: SEARCH_INGREDIENTS_ERROR });
     }
   };
 
@@ -146,6 +157,7 @@ export const RecipeProvider = ({ children }) => {
       const { allRecipes } = response.data;
 
       dispatch({ type: CREATE_RECIPE_SUCCESS, payload: { allRecipes } });
+
       dispatch({ type: CLEAR_VALUES });
     } catch (error) {
       if (error.response.status === 401) return;
@@ -214,7 +226,7 @@ export const RecipeProvider = ({ children }) => {
     dispatch({ type: DELETE_RECIPE_BEGIN });
     try {
       await authFetch.delete(`/recipes/${id}`);
-      getAllRecipes();
+      // getAllRecipes();
       // is there a better wy to reload
       window.location.reload();
     } catch (error) {
@@ -232,7 +244,8 @@ export const RecipeProvider = ({ children }) => {
         ...state,
         getAllRecipes,
         changePage,
-        searchRecipes,
+        searchRecipeName,
+        searchIngredients,
         getSingleRecipe,
         handleChange,
         clearValues,

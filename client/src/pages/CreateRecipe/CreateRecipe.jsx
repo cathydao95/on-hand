@@ -16,6 +16,7 @@ const CreateRecipe = () => {
   const {
     isEditing,
     title,
+    image,
     yields,
     time,
     ingredients,
@@ -71,6 +72,12 @@ const CreateRecipe = () => {
             type="text"
             name="title"
             value={title}
+            handleChange={handleRecipeInput}
+          />
+          <FormRow
+            type="file"
+            name="image"
+            value={image}
             handleChange={handleRecipeInput}
           />
           <FormRow

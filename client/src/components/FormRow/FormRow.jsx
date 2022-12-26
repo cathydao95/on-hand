@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 const FormRow = ({ type, name, value, handleChange, labelText }) => {
   return (
     <div className={styles.formRow}>
-      <label htmlFor="name" className={styles.formLabel}>
+      <label htmlFor={name} className={styles.formLabel}>
         {labelText || name}
       </label>
       <input
@@ -10,7 +10,7 @@ const FormRow = ({ type, name, value, handleChange, labelText }) => {
         value={value}
         name={name}
         onChange={handleChange}
-        className={styles.formInput}
+        className={name === "image" ? styles.imageInput : styles.formInput}
       />
     </div>
   );

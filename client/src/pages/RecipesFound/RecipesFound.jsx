@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { useContext } from "react";
 import RecipeContext from "../../context/recipe_context";
-import IngredientList from "../../components/IngredientList/IngredientList";
+
 import Loading from "../../components/Loading/Loading";
 import SearchedRecipes from "../../components/SearchedRecipes/SearchedRecipes";
 import Navbar from "../../components/Navbar/Navbar";
@@ -13,9 +12,10 @@ import { useNavigate } from "react-router-dom";
 const RecipesFound = () => {
   const navigate = useNavigate();
 
-  const { isLoading } = useContext(RecipeContext);
+  const { isLoading, clearValues } = useContext(RecipeContext);
 
   const clearSearchResults = () => {
+    clearValues();
     navigate(-1);
   };
 

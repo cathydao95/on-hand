@@ -1,13 +1,11 @@
 import styles from "./styles.module.scss";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import RecipeContext from "../../context/recipe_context";
 import { AiFillCloseSquare } from "react-icons/ai";
 import { BsSuitHeartFill } from "react-icons/bs";
 import UserContext from "../../context/user_context";
 import Loading from "../../components/Loading/Loading";
-// import { useRecipeContext } from "../../context/recipe_context";
-// individual receipe page for an item, may need to rename
 
 const FoodRecipe = () => {
   const navigate = useNavigate();
@@ -44,20 +42,42 @@ const FoodRecipe = () => {
       {Object.keys(singleRecipe).length !== 0 ? (
         <div>
           <div>
+            {!isPersonal && (
+              <button
+                onClick={(e) => addToFavorites(currentUser)}
+                className={styles.heartContainer}
+              >
+                <BsSuitHeartFill
+                  className={isFavorite ? "fillHeartIcon" : "heartIcon"}
+                />
+              </button>
+            )}
+            {/* <button
+              onClick={() => navigate(-1)}
+              className={styles.exitContainer}
+            >
+              <AiFillCloseSquare className={styles.exitIcon} />
+            </button> */}
+            {image !== "" ? (
+              <img className={styles.recipeImage} src={image} alt={title} />
+            ) : (
+              <div className={styles.noRecipeImage}></div>
+            )}
+            {/* {!isPersonal && (
+              <button
+                onClick={(e) => addToFavorites(currentUser)}
+                className={styles.heartContainer}
+              >
+                <BsSuitHeartFill
+                  className={isFavorite ? "fillHeartIcon" : "heartIcon"}
+                />
+              </button>
+            )} */}
             <button
               onClick={() => navigate(-1)}
               className={styles.exitContainer}
             >
               <AiFillCloseSquare className={styles.exitIcon} />
-            </button>
-            <img className={styles.recipeImage} src={image} alt={title} />
-            <button
-              onClick={(e) => addToFavorites(currentUser)}
-              className={styles.heartContainer}
-            >
-              <BsSuitHeartFill
-                className={isFavorite ? "fillHeartIcon" : "heartIcon"}
-              />
             </button>
           </div>
 

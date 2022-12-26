@@ -12,7 +12,7 @@ import Footer from "../../components/Footer/Footer";
 //  REFACTOR FORM ROWS INTO A NEW COMPONENT FOR RECIPE AND REGISTER
 
 const CreateRecipe = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {
     isEditing,
     title,
@@ -25,16 +25,23 @@ const CreateRecipe = () => {
     clearValues,
     createRecipe,
     updateRecipe,
+    recipeImageInput,
   } = useContext(RecipeContext);
 
   const { displayAlert } = useContext(UserContext);
-
-  console.log(ingredients, instructions);
 
   const handleRecipeInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     handleChange({ name, value });
+    if (name === "image") {
+      recipeImageInput(value);
+    }
+  };
+
+  const handleRecipeImage = (e) => {
+    const value = e.target.files[0];
+    recipeImageInput(value);
   };
 
   const onSubmit = (e) => {
@@ -77,8 +84,8 @@ const CreateRecipe = () => {
           <FormRow
             type="file"
             name="image"
-            value={image}
-            handleChange={handleRecipeInput}
+            accept="image/*"
+            handleChange={handleRecipeImage}
           />
           <FormRow
             type="text"

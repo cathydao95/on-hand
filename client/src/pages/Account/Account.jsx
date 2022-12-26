@@ -1,4 +1,3 @@
-import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { useState, useContext } from "react";
 import UserContext from "../../context/user_context";
@@ -7,10 +6,8 @@ import Alert from "../../components/Alert/Alert";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
-//  REFACTOR FORM ROWS INTO A NEW COMPONENT FOR RECIPE AND REGISTER
-
 const Account = () => {
-  const { user, logOutUser, showAlert, displayAlert, updateUser, isLoading } =
+  const { user, showAlert, displayAlert, updateUser, isLoading } =
     useContext(UserContext);
   const [name, setName] = useState(user?.name);
   const [lastName, setLastName] = useState(user?.lastName);

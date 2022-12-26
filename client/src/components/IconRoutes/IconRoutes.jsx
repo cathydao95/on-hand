@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
 import styles from "./styles.module.scss";
 import { IconContext } from "react-icons";
 import {
@@ -7,21 +6,11 @@ import {
   AiOutlineSearch,
   AiFillHeart,
   AiOutlinePlus,
-  AiOutlineUser,
 } from "react-icons/ai";
-import UserContext from "../../context/user_context";
 
 const IconRoutes = () => {
-  const { logOutUser } = useContext(UserContext);
   return (
     <nav className={styles.navContainer}>
-      {/* <button
-        onClick={() => {
-          logOutUser();
-        }}
-      >
-        Logout
-      </button> */}
       <div className={styles.iconContainer}>
         <IconContext.Provider value={{ color: "grey", size: "25px" }}>
           <NavLink
@@ -65,16 +54,6 @@ const IconRoutes = () => {
               <AiOutlinePlus /> <span>Recipes</span>
             </div>
           </NavLink>
-          {/* <NavLink
-            to="/account"
-            className={({ isActive }) =>
-              isActive ? styles.linkActive : styles.link
-            }
-          >
-            <div className={styles.linkContainer}>
-              <AiOutlineUser /> <span>Account</span>
-            </div>
-          </NavLink> */}
         </IconContext.Provider>
       </div>
     </nav>

@@ -20,8 +20,6 @@ const Register = () => {
   const [values, setValues] = useState(initialState);
   const navigate = useNavigate();
 
-  //   global state and use navigate
-
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };

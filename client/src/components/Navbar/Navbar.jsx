@@ -1,8 +1,7 @@
-import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
+import { FaUserCircle, FaCaretDown } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import styles from "./styles.module.scss";
-import IconRoutes from "../IconRoutes/IconRoutes";
 
 import UserContext from "../../context/user_context";
 
